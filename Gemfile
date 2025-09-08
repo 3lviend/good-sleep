@@ -22,9 +22,9 @@ gem "ransack", "~> 4.2.1"
 # paginate
 gem "kaminari"
 # Data serializer
-gem 'active_model_serializers', '~> 0.10.2'
+gem "active_model_serializers", "~> 0.10.2"
 # API Doc
-gem 'rswag'
+gem "rswag"
 
 # Use Redis adapter to run Action Cable
 gem "redis", ">= 4.0.1"

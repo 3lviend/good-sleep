@@ -9,6 +9,6 @@ class CreateSleepRecords < ActiveRecord::Migration[8.0]
       t.timestamps
     end
 
-    add_index :sleep_records, [:user_id, :created_at]
+    add_index :sleep_records, [ :user_id, :created_at ]
   end
 end

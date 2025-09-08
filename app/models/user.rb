@@ -1,5 +1,4 @@
 class User < ApplicationRecord
-
   # == Modules
   # acts_as_followable
   # acts_as_follower
