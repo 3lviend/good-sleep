@@ -18,7 +18,7 @@ end
 #
 #  id               :bigint           not null, primary key
 #  awake_time       :datetime
-#  duration_seconds :integer          default(0)
+#  duration_seconds :integer          default(0), not null
 #  sleep_time       :datetime         not null
 #  created_at       :datetime         not null
 #  updated_at       :datetime         not null

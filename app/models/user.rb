@@ -1,11 +1,11 @@
 class User < ApplicationRecord
-  # == Modules
-  # acts_as_followable
-  # acts_as_follower
-
   # == Associations
   has_many :sleep_records, dependent: :destroy
   has_many :daily_sleep_summaries, dependent: :destroy
+  has_many :following_relationship, class_name: "Follow", foreign_key: "follower_id", dependent: :destroy
+  has_many :followers_relationship, class_name: "Follow", foreign_key: "followed_id", dependent: :destroy
+  has_many :following, through: :following_relationship, source: :followed
+  has_many :followers, through: :followers_relationship, source: :follower
 
   # == Validations
   validates :name, presence: true, uniqueness: true
@@ -19,6 +19,25 @@ class User < ApplicationRecord
 
   def current_sleep_record
     sleep_records.sleeping.first
+  end
+
+  def follow(other_user)
+    return unless other_user.is_a?(self.class)
+
+    following_relationship.create(followed_id: other_user.id)
+  end
+
+  def unfollow(other_user)
+    return unless other_user.is_a?(self.class)
+    return unless following?(other_user.id)
+
+    following_relationship.find_by(followed_id: other_user.id)&.destroy
+  end
+
+  def following?(other_user)
+    return unless other_user.is_a?(self.class)
+
+    following_relationship.exists?(followed_id: other_user.id)
   end
 
   def self.ransackable_attributes(_auth_object = nil)

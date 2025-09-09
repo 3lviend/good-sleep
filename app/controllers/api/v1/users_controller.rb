@@ -1,8 +1,7 @@
 module Api
   module V1
     class UsersController < BaseController
-
-      before_action :find_user, only: [:show]
+      before_action :find_user, only: %i[ show ]
 
       # GET /api/v1/users
       def index

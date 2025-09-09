@@ -17,6 +17,11 @@ Rails.application.routes.draw do
             match :clock_out, via: [ :put, :patch ]
           end
         end
+        resources :follows, only: [ :index, :create ] do
+          collection do
+            get :followers
+          end
+        end
       end
     end
   end

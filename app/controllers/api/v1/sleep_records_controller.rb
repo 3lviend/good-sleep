@@ -51,7 +51,7 @@ module Api
       def clock_out
         @sleep_record = @user.current_sleep_record
         unless @sleep_record
-          render json: { error: 'No active sleep record found. Please clock in first.' }, status: 400 and return
+          render json: { error: "No active sleep record found. Please clock in first." }, status: 400 and return
         end
 
         @sleep_record.awake_time = Time.current
