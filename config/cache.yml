@@ -1,16 +1,12 @@
 default: &default
-  store_options:
-    # Cap age of oldest cache entry to fulfill retention policies
-    # max_age: <%= 60.days.to_i %>
-    max_size: <%= 256.megabytes %>
-    namespace: <%= Rails.env %>
+  adapter: redis_store
+  url: <%= ENV.fetch("REDIS_URL") { "redis://localhost:6379/1" } %>
 
 development:
   <<: *default
 
 test:
-  <<: *default
+  adapter: null_store
 
 production:
-  database: cache
   <<: *default
