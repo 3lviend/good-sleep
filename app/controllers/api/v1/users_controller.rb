@@ -21,14 +21,14 @@ module Api
 
       # GET /api/v1/users/:id
       def show
-        render json: UserSerializer.new(@user), status: 200
+        render json: { user: UserSerializer.new(@user) }, status: 200
       end
 
       private
 
       def find_user
-        @user = Rails.cache.fetch("User::#{params[:user_id]}", expires_in: 10.minutes) do
-          User.find(params[:user_id])
+        @user = Rails.cache.fetch("User::#{params[:id]}", expires_in: 10.minutes) do
+          User.find(params[:id])
         end
       end
     end

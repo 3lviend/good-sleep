@@ -12,7 +12,7 @@ Rails.application.routes.draw do
     namespace :v1 do
       resources :users, only: [ :index, :show ] do
         resources :sleep_records, only: [ :index, :show ] do
-          member do
+          collection do
             post  :clock_in
             match :clock_out, via: [ :put, :patch ]
           end

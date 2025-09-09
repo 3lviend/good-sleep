@@ -21,13 +21,6 @@ class User < ApplicationRecord
     sleep_records.sleeping.first
   end
 
-  def go_sleep(sleep_time = Time.current)
-    #  Clock-in a new sleep record if user not already sleeping
-    return current_sleep_record if sleep_records.sleeping.exists?
-
-    sleep_records.create(sleep_time: sleep_time, awake_time: nil, duration_seconds: nil)
-  end
-
   def self.ransackable_attributes(_auth_object = nil)
     %i[id name]
   end

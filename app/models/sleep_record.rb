@@ -8,15 +8,16 @@ class SleepRecord < ApplicationRecord
   validates :duration_seconds, numericality: { only_integer: true, greater_than_or_equal_to: 0 }, unless: :sleeping?
 
   # == Scopes
-  scope :short_sleep, -> { where("duration_seconds < ?", 7 * 3600) }
-  scope :well_sleep,  -> { where(duration_seconds: (7 * 3600)..(9 * 3600)) }
-  scope :over_sleep,  -> { where("duration_seconds > ?", 9 * 3600) }
-  scope :longest,     -> { order(duration_seconds: :desc) }
-  scope :shortest,    -> { order(duration_seconds: :asc) }
-  scope :sleeping,    -> { order(sleep_time: :desc).where(awake_time: nil) }
+  scope :short_sleep,     -> { where("duration_seconds < ?", 7 * 3600) }
+  scope :well_sleep,      -> { where(duration_seconds: (7 * 3600)..(9 * 3600)) }
+  scope :over_sleep,      -> { where("duration_seconds > ?", 9 * 3600) }
+  scope :longest,         -> { order(duration_seconds: :desc) }
+  scope :shortest,        -> { order(duration_seconds: :asc) }
+  scope :sleeping,        -> { order(sleep_time: :desc).where(awake_time: nil) }
+  scope :order_by_newest, -> { order(sleep_time: :desc) }
 
   # == Callbacks
-  before_validation :set_sleep_duration, on: :create
+  before_validation :set_sleep_duration, on: :update
 
   # == Pagination
   paginates_per 10
