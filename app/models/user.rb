@@ -5,10 +5,15 @@ class User < ApplicationRecord
 
   # == Associations
   has_many :sleep_records, dependent: :destroy
+  has_many :daily_sleep_summaries, dependent: :destroy
 
   # == Validations
   validates :name, presence: true, uniqueness: true
   validates :name, length: { maximum: 50 }
+
+  # == Callbacks
+  after_save    :clear_cache
+  after_destroy :clear_cache
 
   # == Instance Methods
 
@@ -20,7 +25,11 @@ class User < ApplicationRecord
     #  Clock-in a new sleep record if user not already sleeping
     return current_sleep_record if sleep_records.sleeping.exists?
 
-    create(sleep_time: sleep_time, awake_time: nil, duration_seconds: nil)
+    sleep_records.create(sleep_time: sleep_time, awake_time: nil, duration_seconds: nil)
+  end
+
+  def self.ransackable_attributes(_auth_object = nil)
+    %i[id name]
   end
 end
 
