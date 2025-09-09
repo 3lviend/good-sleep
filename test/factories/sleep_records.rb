@@ -1,13 +1,14 @@
 FactoryBot.define do
   factory :sleep_record do
     association :user
-    sleep_time { Faker::Time.backward(days: 1, period: :night) }
-    awake_time { Faker::Time.forward(days: 1, period: :morning) }
+
+    sleep_time       { Faker::Time.backward(days: 1, period: :night) }
+    awake_time       { Faker::Time.forward(days: 1, period: :morning) }
     duration_seconds { ((awake_time || Time.current) - sleep_time).to_i }
 
     trait :sleeping do
       awake_time { nil }
-      duration_seconds { nil }
+      duration_seconds { 0 }
     end
   end
 end
@@ -18,7 +19,7 @@ end
 #
 #  id               :bigint           not null, primary key
 #  awake_time       :datetime
-#  duration_seconds :integer
+#  duration_seconds :integer          default(0)
 #  sleep_time       :datetime         not null
 #  created_at       :datetime         not null
 #  updated_at       :datetime         not null

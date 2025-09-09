@@ -26,19 +26,18 @@ gem "active_model_serializers", "~> 0.10.2"
 # API Doc
 gem "rswag"
 
-# Use Redis adapter to run Action Cable
-gem "redis", ">= 4.0.1"
+# Redis for caching
+gem "redis-actionpack"
+
+# Background Jobs
+gem "sidekiq"
+gem "sidekiq-scheduler"
 
 # Use Active Model has_secure_password [https://guides.rubyonrails.org/active_model_basics.html#securepassword]
 # gem "bcrypt", "~> 3.1.7"
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem "tzinfo-data", platforms: %i[ windows jruby ]
-
-# Use the database-backed adapters for Rails.cache, Active Job, and Action Cable
-gem "solid_cache"
-gem "solid_queue"
-gem "solid_cable"
 
 # Reduces boot times through caching; required in config/boot.rb
 gem "bootsnap", require: false
@@ -52,11 +51,13 @@ gem "thruster", require: false
 # Use Active Storage variants [https://guides.rubyonrails.org/active_storage_overview.html#transforming-images]
 # gem "image_processing", "~> 1.2"
 
-# gem 'acts_as_follower', github: 'tcocca/acts_as_follower', branch: 'master'
+# gem "power_of_friendship", github: "LelandCer/power_of_friendship", branch: 'master'
 
 group :development, :test do
   # Models schema comment
-  gem "annotaterb"
+  gem "annotaterb", require: false
+  # Environment variables from .env for development and test
+  gem "dotenv-rails"
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
   gem "debug", platforms: %i[ mri windows ], require: "debug/prelude"
 
@@ -72,7 +73,8 @@ group :development, :test do
 end
 
 group :development do
-  gem "bullet"
+  gem "foreman", require: false
+  gem "bullet", require: false # detect N+1 queries
   # Use console on exceptions pages [https://github.com/rails/web-console]
   gem "web-console"
 end

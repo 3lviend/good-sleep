@@ -1,5 +1,5 @@
 FactoryBot.define do
-  DEFAULT_SLEEP_COUNT = 365
+  DEFAULT_SLEEP_COUNT = 31
 
   factory :user do
     name { Faker::Name.name }
@@ -14,7 +14,8 @@ FactoryBot.define do
       after(:create) do |user, evaluator|
         # Create past sleep records
         evaluator.sleep_record_count.times do |idx|
-          sleep_day      = Time.current - (DEFAULT_SLEEP_COUNT - idx).days
+          sleep_count    = evaluator.sleep_record_count - idx
+          sleep_day      = Time.current - sleep_count.days
           sleep_time     = sleep_day.change(hour: rand(18..23), min: rand(0..59))
           awake_time     = sleep_day.change(hour: rand(9..11), min: rand(0..59)) + 1.days
           sleep_duration = (awake_time - sleep_time).to_i
