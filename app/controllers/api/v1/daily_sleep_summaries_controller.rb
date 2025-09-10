@@ -1,3 +1,10 @@
+# Note:
+# - This controller manages daily sleep summaries for users.
+# - It includes actions to list all daily sleep summaries for a user and to show a specific daily sleep summary.
+# - It uses caching to optimize performance and reduce database load.
+# - Pagination using the `kaminari` gem is implemented for listing endpoints, that configured on 'config/initializers/kaminari_config.rb'.
+# - Maximum per page is set to 100, default is 10.
+
 module Api
   module V1
     class DailySleepSummariesController < BaseController

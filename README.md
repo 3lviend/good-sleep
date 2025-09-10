@@ -48,13 +48,64 @@ This will start the Rails server on `http://localhost:3000` and Sidekiq for back
 
 ## API Endpoints
 
-Here are the main API endpoints available:
+This documents the available API endpoints based on the output of `rails routes`.
 
-*   `POST /api/v1/users/:user_id/sleep_records/:id/clock_in`: Clock in a sleep record.
-*   `PUT /api/v1/users/:user_id/sleep_records/:id/clock_out`: Clock out a sleep record.
-*   `GET /api/v1/users/:user_id/sleep_records`: Get all sleep records for a user.
-*   `GET /api/v1/users/:user_id/sleep_records/daily_sleep_summaries`: Get daily sleep summaries for a user.
-*   `GET /api/v1/users/:id`: Get user details.
+### User Management
+
+*   **List All Users**
+    *   Method: `GET`
+    *   Path: `/api/v1/users`
+*   **Get User Details**
+    *   Method: `GET`
+    *   Path: `/api/v1/users/:id`
+
+### Following and Followers
+
+*   **List Followed Users**
+    *   Method: `GET`
+    *   Path: `/api/v1/users/:user_id/follows`
+*   **Request to Follow a User**
+    *   Method: `POST`
+    *   Path: `/api/v1/users/:user_id/follows/request_follow`
+*   **Unfollow a User**
+    *   Method: `DELETE`
+    *   Path: `/api/v1/users/:user_id/follows/unfollow`
+*   **List Followers**
+    *   Method: `GET`
+    *   Path: `/api/v1/users/:user_id/follows/followers`
+*   **List Blocked Users**
+    *   Method: `GET`
+    *   Path: `/api/v1/users/:user_id/follows/blocked`
+*   **Block a Follower**
+    *   Method: `PUT` / `PATCH`
+    *   Path: `/api/v1/users/:user_id/follows/block_follower`
+*   **Unblock a Follower**
+    *   Method: `PUT` / `PATCH`
+    *   Path: `/api/v1/users/:user_id/follows/unblock_follower`
+
+### Sleep Records
+
+*   **List Sleep Records**
+    *   Method: `GET`
+    *   Path: `/api/v1/users/:user_id/sleep_records`
+*   **Get a Specific Sleep Record**
+    *   Method: `GET`
+    *   Path: `/api/v1/users/:user_id/sleep_records/:id`
+*   **Clock In**
+    *   Method: `POST`
+    *   Path: `/api/v1/users/:user_id/sleep_records/clock_in`
+*   **Clock Out**
+    *   Method: `PUT` / `PATCH`
+    *   Path: `/api/v1/users/:user_id/sleep_records/clock_out`
+
+### Sleep Summaries
+
+*   **List Daily Sleep Summaries**
+    *   Method: `GET`
+    *   Path: `/api/v1/users/:user_id/daily_sleep_summaries`
+*   **Get a Specific Daily Sleep Summary**
+    *   Method: `GET`
+    *   Path: `/api/v1/users/:user_id/daily_sleep_summaries/:id`
 
 ## Testing
 

@@ -1,7 +1,17 @@
 class DailySleepSummarySerializer < ActiveModel::Serializer
-  attributes :id, :date, :sleep_quality_score, :total_sleep_duration
+  attributes :id, :date, :total_sleep_duration
+  attributes :sleep_duration
+  attributes :sleep_quality_score
   attributes :user
   attributes :created_at
+
+  def sleep_duration
+    {
+      hour: object.sleep_duration(:hour),
+      minute: object.sleep_duration(:minute),
+      second: object.sleep_duration(:second)
+    }
+  end
 
   def user
     UserSerializer.new(object.user, root: false).as_json.except(:followable_summaries, :last_30_days_sleep_summaries)

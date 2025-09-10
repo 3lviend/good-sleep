@@ -32,14 +32,14 @@ class UserSerializer < ActiveModel::Serializer
   def calculate_total_sleep_durations(sleep_duration_data = {})
     sleep_duration_data.map do |key, values|
       total_duration = values.pluck(:duration).sum
-      [key, total_duration.round(2)]
+      [ key, total_duration.round(2) ]
     end.to_h
   end
 
   def calculate_average_sleep_durations(sleep_duration_data = {})
     sleep_duration_data.map do |key, values|
       durations = values.pluck(:duration)
-      [key, (durations.sum / durations.size.to_f).round(2)]
+      [ key, (durations.sum / durations.size.to_f).round(2) ]
     end.to_h
   end
 end

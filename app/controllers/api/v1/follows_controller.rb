@@ -67,7 +67,7 @@ module Api
         @follow = @user.following_relationship.build(followed_id: params[:followed_user_id])
         if @follow.save
           @other_user = @follow.followed
-          clear_users_caches([@user, @other_user], %w[Following Follower])
+          clear_users_caches([ @user, @other_user ], %w[Following Follower])
           render json: {
             user: UserSerializer.new(@other_user),
             message: "Successfully followed #{@other_user.name}."
@@ -87,7 +87,7 @@ module Api
         end
 
         if @follow.destroy
-          clear_users_caches([@user, @other_user], %w[Following Follower])
+          clear_users_caches([ @user, @other_user ], %w[Following Follower])
           render json: {
             user: UserSerializer.new(@other_user),
             message: "Successfully unfollowed #{@other_user.name}."
@@ -107,7 +107,7 @@ module Api
         end
 
         if @follow.update(blocked: true)
-          clear_users_caches([@user, @other_user], %w[Following Follower Blocked])
+          clear_users_caches([ @user, @other_user ], %w[Following Follower Blocked])
           render json: {
             user: UserSerializer.new(@other_user),
             message: "Successfully blocked #{@other_user.name}."
@@ -127,7 +127,7 @@ module Api
         end
 
         if @follow.update(blocked: false)
-          clear_users_caches([@user, @other_user], %w[Following Follower Blocked])
+          clear_users_caches([ @user, @other_user ], %w[Following Follower Blocked])
 
           render json: {
             user: UserSerializer.new(@other_user),
