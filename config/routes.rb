@@ -10,16 +10,21 @@ Rails.application.routes.draw do
 
   namespace :api do
     namespace :v1 do
-      resources :users, only: [ :index, :show ] do
-        resources :sleep_records, only: [ :index, :show ] do
+      resources :users, only: %i[ index show ] do
+        resources :sleep_records, only: %i[ index show ] do
           collection do
             post  :clock_in
-            match :clock_out, via: [ :put, :patch ]
+            match :clock_out, via: %i[ put patch ]
           end
         end
-        resources :follows, only: [ :index, :create ] do
+        resources :follows, only: %i[ index create ] do
           collection do
-            get :followers
+            get    :followers
+            get    :blocked
+            post   :request_follow
+            delete :unfollow
+            match  :block_follower, via: %i[ put patch ]
+            match  :unblock_follower, via: %i[ put patch ]
           end
         end
       end

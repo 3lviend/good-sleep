@@ -3,13 +3,15 @@ class FollowSerializer < ActiveModel::Serializer
   attributes :sleep_records
 
   def sleep_records
-    records = object.sleep_records.order_by_newest.longest.limit(10)
+    records = object.sleep_records.longest.limit(10)
 
-    ActiveModel::Serializer::CollectionSerializer.new(
+    data = ActiveModel::Serializer::CollectionSerializer.new(
       records,
       root: false,
       serializer: SleepRecordSerializer
     )
+
+    data.map { |record| record.as_json.except(:user) }
   end
 end
 
