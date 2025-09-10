@@ -22,7 +22,7 @@ module Api
         render json: {
           following: ActiveModel::Serializer::CollectionSerializer.new(
             @followed_users,
-            serializer: FollowSerializer
+            serializer: UserFollowSerializer
           ),
           pagination: pagination_meta(**cache_options)
         }
@@ -39,7 +39,7 @@ module Api
         render json: {
           followers: ActiveModel::Serializer::CollectionSerializer.new(
             @followed_users,
-            serializer: FollowSerializer
+            serializer: UserFollowSerializer
           ),
           pagination: pagination_meta(**cache_options)
         }

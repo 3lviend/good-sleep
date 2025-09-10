@@ -1,7 +1,12 @@
 class SleepRecordSerializer < ActiveModel::Serializer
-  attributes :id, :sleep_time, :awake_time, :sleep_duration, :created_at
+  attributes :id, :sleep_time, :awake_time
+  attributes :sleep_duration
+  attributes :user
+  attributes :created_at
 
-  belongs_to :user, serializer: UserSerializer
+  def user
+    UserSerializer.new(object.user, root: false).as_json.except(:followable_summaries)
+  end
 
   def sleep_duration
     {

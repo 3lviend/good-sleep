@@ -5,7 +5,7 @@ class ApplicationRecord < ActiveRecord::Base
     "#{self.class.name}::#{id}"
   end
 
-  def fetch_cache(cache_key = default_cache_key, expires_in: 1.day)
+  def fetch_cache(cache_key = default_cache_key, expires_in: 10.minutes)
     Rails.cache.fetch(cache_key) do
       yield
     end

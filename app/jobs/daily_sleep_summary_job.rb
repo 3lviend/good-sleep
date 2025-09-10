@@ -7,6 +7,9 @@ class DailySleepSummaryJob
 
     (start_date..end_date).each do |date|
       User.find_each do |user|
+        # Clear the user's sleep summaries cache if processing the last date in the range
+        user.clear_cache("#{user.default_cache_key}::SleepSummaries") if date.eql?(end_date)
+
         sleep_records = user.sleep_records.where(sleep_time: date.to_time.all_day)
 
         next if sleep_records.empty?

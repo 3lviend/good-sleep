@@ -31,6 +31,14 @@ class User < ApplicationRecord
     following_relationship.exists?(followed_id: other_user.id)
   end
 
+  def followable_summaries
+    {
+      following_count: following.count,
+      followers_count: followers.count,
+      followers_blocked_count: blocked.count
+    }
+  end
+
   def self.ransackable_attributes(_auth_object = nil)
     %i[id name]
   end

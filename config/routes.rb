@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
   require "sidekiq/web"
+  require 'sidekiq-scheduler/web'
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
   # Can be used by load balancers and uptime monitors to verify that the app is live.
@@ -27,6 +28,7 @@ Rails.application.routes.draw do
             match  :unblock_follower, via: %i[ put patch ]
           end
         end
+        resources :daily_sleep_summaries, only: %i[ index show ]
       end
     end
   end

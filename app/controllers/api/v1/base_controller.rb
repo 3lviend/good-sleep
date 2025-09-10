@@ -29,7 +29,7 @@ module Api
         return {} unless collection.respond_to?(:current_page)
 
         cache_suffix_key = "#{collection.class}::page-#{collection.current_page}-per-#{collection.limit_value}"
-        @pagination_meta = Rails.cache.fetch("#{cache_key}::#{cache_suffix_key}", expires_in: 5.minutes) do
+        @pagination_meta = Rails.cache.fetch("#{cache_key}::#{cache_suffix_key}", expires_in: 10.minutes) do
           build_pagination_meta(collection)
         end
 
