@@ -1,3 +1,10 @@
+# Note:
+# - This controller manages user sleep records, including clocking in and out of sleep sessions.
+# - It provides endpoints to list and show sleep records, as well as to clock in and clock out.
+# - It uses caching to optimize performance and reduce database load.
+# - Pagination using the `kaminari` gem is implemented for listing endpoints, that configured on 'config/initializers/kaminari_config.rb'.
+# - Maximum per page is set to 100, default is 10.
+
 module Api
   module V1
     class SleepRecordsController < BaseController
