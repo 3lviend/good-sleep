@@ -1,5 +1,6 @@
 require "sidekiq"
 require "sidekiq/web"
+require "sidekiq-scheduler"
 
 Sidekiq::Web.use(Rack::Auth::Basic) do |user, password|
   if Rails.env.development?
@@ -11,7 +12,7 @@ end
 
 Sidekiq.configure_server do |config|
   config.on(:startup) do
-    Sidekiq.schedule = YAML.load_file(File.expand_path("../../sidekiq.yml", __FILE__))
-    Sidekiq::Scheduler.reload_schedule!
+    Sidekiq.schedule = YAML.load_file(File.expand_path("#{Rails.root}/config/schedule.yml", __FILE__))
+    SidekiqScheduler::Scheduler.instance.reload_schedule!
   end
 end

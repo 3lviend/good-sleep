@@ -1,5 +1,9 @@
-:scheduler:
-  :schedule:
-    daily_sleep_summary_job:
-      cron: '0 2 * * *' # Runs every day at 2 AM
-      class: DailySleepSummaryJob
+:verbose: true
+:queues:
+  - default
+development:
+  :concurrency: 10
+staging:
+  :concurrency: 5
+production:
+  :concurrency: 10
