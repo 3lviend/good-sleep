@@ -142,8 +142,22 @@ This documents the available API endpoints based on the output of `rails routes`
 
 ## Testing
 
-This project uses RSpec for testing. To run the test suite, use the following command:
+This project uses RSpec for testing. To run the test suite, use the following commands:
 
-```bash
-# RSpec is not yet configured for this project.
-```
+*   **Run all tests:**
+
+    ```bash
+    bundle exec rspec
+    ```
+
+*   **Run tests in a specific file:**
+
+    ```bash
+    bundle exec rspec spec/path/to/your_spec_file.rb
+    ```
+
+*   **Run tests in a specific directory:**
+
+    ```bash
+    bundle exec rspec spec/path/to/your_spec_directory/
+    ```
