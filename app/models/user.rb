@@ -33,9 +33,9 @@ class User < ApplicationRecord
 
   def followable_summaries
     {
-      following_count: following.count,
-      followers_count: followers.count,
-      followers_blocked_count: blocked.count
+      following_count: following.size,
+      followers_count: followers.size,
+      followers_blocked_count: blocked.size
     }
   end
 
