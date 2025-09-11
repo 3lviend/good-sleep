@@ -52,7 +52,7 @@ class SleepRecord < ApplicationRecord
   end
 
   def self.ransackable_attributes(_auth_object = nil)
-    %i[id sleep_time awake_time duration_seconds]
+    %w[id sleep_time awake_time duration_seconds]
   end
 
   private

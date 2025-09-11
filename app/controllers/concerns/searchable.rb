@@ -12,7 +12,7 @@ module Searchable
   def ransack_params
     return {} if params[:q].blank?
 
-    permitted_params = if self.is_a?(ActionController::Base)
+    permitted_params = if self.is_a?(ActionController::Base) || self.is_a?(ActionController::API)
       permitted_ransack_params
     elsif self.is_a?(ActionView::Base)
       self.controller&.permitted_ransack_params
