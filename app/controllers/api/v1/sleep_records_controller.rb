@@ -10,11 +10,12 @@ module Api
     class SleepRecordsController < BaseController
       before_action :find_user
 
-      self.permitted_ransack_params = %i[
-        id_eq
-        sleep_time_gteq sleep_time_lteq
-        awake_time_gteq awake_time_lteq
-        duration_seconds_gteq duration_seconds_lteq
+      self.permitted_ransack_params = [
+        :id_eq,
+        :sleep_time_gteq, :sleep_time_lteq,
+        :awake_time_gteq, :awake_time_lteq,
+        :duration_seconds_gteq, :duration_seconds_lteq,
+        sleep_time_between: [], awake_time_between: [], duration_seconds_between: []
       ]
 
       # GET  /api/v1/users/:user_id/sleep_records

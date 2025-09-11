@@ -15,6 +15,15 @@ class SleepRecord < ApplicationRecord
   scope :shortest,        -> { order(duration_seconds: :asc) }
   scope :sleeping,        -> { order(sleep_time: :desc).where(awake_time: nil) }
   scope :order_by_newest, -> { order(sleep_time: :desc) }
+  scope :sleep_time_between, ->(start_time, end_time) {
+    where(sleep_time: start_time..end_time)
+  }
+  scope :awake_time_between, ->(start_time, end_time) {
+    where(awake_time: start_time..end_time)
+  }
+  scope :duration_seconds_between, ->(start_time, end_time) {
+    where(duration_seconds: start_time..end_time)
+  }
 
   # == Callbacks
   before_validation :set_sleep_duration, on: :update
@@ -53,6 +62,10 @@ class SleepRecord < ApplicationRecord
 
   def self.ransackable_attributes(_auth_object = nil)
     %w[id sleep_time awake_time duration_seconds]
+  end
+
+  def self.ransackable_scopes(_auth_object = nil)
+    %w[sleep_time_between awake_time_between duration_seconds_between]
   end
 
   private
