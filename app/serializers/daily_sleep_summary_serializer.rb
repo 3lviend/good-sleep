@@ -14,7 +14,7 @@ class DailySleepSummarySerializer < ActiveModel::Serializer
   end
 
   def user
-    UserSerializer.new(object.user, root: false).as_json.except(:followable_summaries, :last_30_days_sleep_summaries)
+    UserSerializer.new(object.user, root: false, include_followable_summaries: false).as_json.except(:last_30_days_sleep_summaries)
   end
 end
 

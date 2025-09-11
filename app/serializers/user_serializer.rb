@@ -1,5 +1,14 @@
 class UserSerializer < ActiveModel::Serializer
-  attributes :id, :name, :followable_summaries
+  attributes :id, :name
+  attribute :followable_summaries, if: :include_followable_summaries?
+
+  def include_followable_summaries?
+    instance_options[:include_followable_summaries] || true
+  end
+
+  def followable_summaries
+    object.followable_summaries
+  end
   attributes :last_30_days_sleep_summaries
   attributes :created_at
 
