@@ -83,7 +83,7 @@ module Api
         @other_user  = @follow_data[:user]
         @follow      = @follow_data[:follow]
         if @follow.blank? && !@other_user.following?(@user)
-          render json: { error: "You are not following #{@follow_data[:user].name} or got blocked." }, status: 422
+          render json: { error: "You are not following #{@follow_data[:user].name} or got blocked." }, status: 422 and return
         end
 
         if @follow.destroy
@@ -103,7 +103,7 @@ module Api
         @other_user  = @follow_data[:user]
         @follow      = @follow_data[:follow]
         if @follow.blank? && !@other_user.following?(@user)
-          render json: { error: "You are followed by user #{@follow_data[:user].name}." }, status: 422
+          render json: { error: "You are followed by user #{@follow_data[:user].name}." }, status: 422 and return
         end
 
         if @follow.update(blocked: true)
@@ -123,7 +123,7 @@ module Api
         @other_user  = @follow_data[:user]
         @follow      = @follow_data[:follow]
         if @follow.blank? && !@other_user.following?(@user)
-          render json: { error: "You are followed by user #{@follow_data[:user].name}." }, status: 422
+          render json: { error: "You are followed by user #{@follow_data[:user].name}." }, status: 422 and return
         end
 
         if @follow.update(blocked: false)

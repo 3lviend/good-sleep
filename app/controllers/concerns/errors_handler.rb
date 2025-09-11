@@ -63,9 +63,6 @@ module ErrorsHandler
   end
 
   def respond_with_error(status, message, public_file: nil)
-    respond_to do |format|
-      format.json { render json: { message: message }, status: status }
-      format.any { head status } # For other formats, just return the status code
-    end
+    render json: { message: message }, status: status
   end
 end
