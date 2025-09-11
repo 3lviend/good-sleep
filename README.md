@@ -64,30 +64,63 @@ This documents the available API endpoints based on the output of `rails routes`
 *   **List Followed Users**
     *   Method: `GET`
     *   Path: `/api/v1/users/:user_id/follows`
+    *   Parameters:
+        *   `page`: Page number for pagination.
+        *   `per_page`: Number of items per page.
 *   **Request to Follow a User**
     *   Method: `POST`
     *   Path: `/api/v1/users/:user_id/follows/request_follow`
+    *   Parameters:
+        *   `followed_user_id`: ID of the user to follow.
 *   **Unfollow a User**
     *   Method: `DELETE`
     *   Path: `/api/v1/users/:user_id/follows/unfollow`
+    *   Parameters:
+        *   `followed_user_id`: ID of the user to unfollow.
 *   **List Followers**
     *   Method: `GET`
     *   Path: `/api/v1/users/:user_id/follows/followers`
+    *   Parameters:
+        *   `page`: Page number for pagination.
+        *   `per_page`: Number of items per page.
 *   **List Blocked Users**
     *   Method: `GET`
     *   Path: `/api/v1/users/:user_id/follows/blocked`
+    *   Parameters:
+        *   `page`: Page number for pagination.
+        *   `per_page`: Number of items per page.
 *   **Block a Follower**
     *   Method: `PUT` / `PATCH`
     *   Path: `/api/v1/users/:user_id/follows/block_follower`
+    *   Parameters:
+        *   `follower_user_id`: ID of the follower to block.
 *   **Unblock a Follower**
     *   Method: `PUT` / `PATCH`
     *   Path: `/api/v1/users/:user_id/follows/unblock_follower`
+    *   Parameters:
+        *   `follower_user_id`: ID of the follower to unblock.
 
 ### Sleep Records
 
 *   **List Sleep Records**
     *   Method: `GET`
     *   Path: `/api/v1/users/:user_id/sleep_records`
+    *   Parameters:
+        *   `page`: Page number for pagination.
+        *   `per_page`: Number of items per page.
+        *   `q[id_eq]`: Filter by exact ID.
+        *   `q[sleep_time_gteq]`: Filter by sleep time greater than or equal to a given datetime. (e.g., '2025-09-09 23:52:01').
+        *   `q[sleep_time_lteq]`: Filter by sleep time less than or equal to a given datetime. (e.g., '2025-09-10 09:21:00').
+        *   `q[sleep_time_between][]`: Filter by sleep time between given datetime begin. (e.g., '2025-09-10 09:21:00').
+        *   `q[sleep_time_between][]`: Filter by sleep time between given datetime end. (e.g., '2025-09-10 09:23:00').
+        *   `q[awake_time_gteq]`: Filter by awake time greater than or equal to a given datetime. (e.g., '2025-09-09 23:52:01').
+        *   `q[awake_time_lteq]`: Filter by awake time less than or equal to a given datetime. (e.g., '2025-09-10 09:21:00').
+        *   `q[awake_time_between][]`: Filter by awake time betweeen given datetime begin. (e.g., '2025-09-10 09:21:00').
+        *   `q[awake_time_between][]`: Filter by awake time betweeen given datetime end. (e.g., '2025-09-10 10:00:00').
+        *   `q[duration_seconds_gteq]`: Filter by duration in seconds greater than or equal to a given value.
+        *   `q[duration_seconds_lteq]`: Filter by duration in seconds less than or equal to a given value.
+        *   `q[duration_seconds_between][]`: Filter by duration in seconds between given value begin. (e.g., '3600' for 1 hour, '32400' for 9 hours)
+        *   `q[duration_seconds_between][]`: Filter by duration in seconds between given value end. (e.g., '3600' for 1 hour, '32400' for 9 hours)
 *   **Get a Specific Sleep Record**
     *   Method: `GET`
     *   Path: `/api/v1/users/:user_id/sleep_records/:id`
