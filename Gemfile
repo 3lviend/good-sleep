@@ -18,7 +18,7 @@ gem "stimulus-rails"
 gem "jbuilder"
 
 # Ransack filters
-gem "ransack", "~> 4.2.1"
+gem "ransack", "~> 4.3.0"
 # paginate
 gem "kaminari"
 # Data serializer
