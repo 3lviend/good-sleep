@@ -46,99 +46,22 @@ foreman start
 
 This will start the Rails server on `http://localhost:3000` and Sidekiq for background jobs.
 
-## API Endpoints
+## Development Tools
 
-This documents the available API endpoints based on the output of `rails routes`.
+This project includes several tools to help with development and performance monitoring:
 
-### User Management
+*   **Bullet:** Helps to identify N+1 queries. Warnings are logged to the Rails logger and the `log/bullet.log` file.
+*   **QueryTrack:** Tracks slow database queries. Slow queries are logged to the Rails logger.
 
-*   **List All Users**
-    *   Method: `GET`
-    *   Path: `/api/v1/users`
-*   **Get User Details**
-    *   Method: `GET`
-    *   Path: `/api/v1/users/:id`
+## API Documentation
 
-### Following and Followers
+This project uses [Rswag](https://github.com/rswag/rswag) to generate and serve API documentation.
 
-*   **List Followed Users**
-    *   Method: `GET`
-    *   Path: `/api/v1/users/:user_id/follows`
-    *   Parameters:
-        *   `page`: Page number for pagination.
-        *   `per_page`: Number of items per page.
-*   **Request to Follow a User**
-    *   Method: `POST`
-    *   Path: `/api/v1/users/:user_id/follows/request_follow`
-    *   Parameters:
-        *   `followed_user_id`: ID of the user to follow.
-*   **Unfollow a User**
-    *   Method: `DELETE`
-    *   Path: `/api/v1/users/:user_id/follows/unfollow`
-    *   Parameters:
-        *   `followed_user_id`: ID of the user to unfollow.
-*   **List Followers**
-    *   Method: `GET`
-    *   Path: `/api/v1/users/:user_id/follows/followers`
-    *   Parameters:
-        *   `page`: Page number for pagination.
-        *   `per_page`: Number of items per page.
-*   **List Blocked Users**
-    *   Method: `GET`
-    *   Path: `/api/v1/users/:user_id/follows/blocked`
-    *   Parameters:
-        *   `page`: Page number for pagination.
-        *   `per_page`: Number of items per page.
-*   **Block a Follower**
-    *   Method: `PUT` / `PATCH`
-    *   Path: `/api/v1/users/:user_id/follows/block_follower`
-    *   Parameters:
-        *   `follower_user_id`: ID of the follower to block.
-*   **Unblock a Follower**
-    *   Method: `PUT` / `PATCH`
-    *   Path: `/api/v1/users/:user_id/follows/unblock_follower`
-    *   Parameters:
-        *   `follower_user_id`: ID of the follower to unblock.
+You can access the interactive API documentation at:
 
-### Sleep Records
+*   **Swagger UI:** `http://localhost:3000/api-docs`
 
-*   **List Sleep Records**
-    *   Method: `GET`
-    *   Path: `/api/v1/users/:user_id/sleep_records`
-    *   Parameters:
-        *   `page`: Page number for pagination.
-        *   `per_page`: Number of items per page.
-        *   `q[id_eq]`: Filter by exact ID.
-        *   `q[sleep_time_gteq]`: Filter by sleep time greater than or equal to a given datetime. (e.g., '2025-09-09 23:52:01').
-        *   `q[sleep_time_lteq]`: Filter by sleep time less than or equal to a given datetime. (e.g., '2025-09-10 09:21:00').
-        *   `q[sleep_time_between][]`: Filter by sleep time between given datetime begin. (e.g., '2025-09-10 09:21:00').
-        *   `q[sleep_time_between][]`: Filter by sleep time between given datetime end. (e.g., '2025-09-10 09:23:00').
-        *   `q[awake_time_gteq]`: Filter by awake time greater than or equal to a given datetime. (e.g., '2025-09-09 23:52:01').
-        *   `q[awake_time_lteq]`: Filter by awake time less than or equal to a given datetime. (e.g., '2025-09-10 09:21:00').
-        *   `q[awake_time_between][]`: Filter by awake time betweeen given datetime begin. (e.g., '2025-09-10 09:21:00').
-        *   `q[awake_time_between][]`: Filter by awake time betweeen given datetime end. (e.g., '2025-09-10 10:00:00').
-        *   `q[duration_seconds_gteq]`: Filter by duration in seconds greater than or equal to a given value.
-        *   `q[duration_seconds_lteq]`: Filter by duration in seconds less than or equal to a given value.
-        *   `q[duration_seconds_between][]`: Filter by duration in seconds between given value begin. (e.g., '3600' for 1 hour, '32400' for 9 hours)
-        *   `q[duration_seconds_between][]`: Filter by duration in seconds between given value end. (e.g., '3600' for 1 hour, '32400' for 9 hours)
-*   **Get a Specific Sleep Record**
-    *   Method: `GET`
-    *   Path: `/api/v1/users/:user_id/sleep_records/:id`
-*   **Clock In**
-    *   Method: `POST`
-    *   Path: `/api/v1/users/:user_id/sleep_records/clock_in`
-*   **Clock Out**
-    *   Method: `PUT` / `PATCH`
-    *   Path: `/api/v1/users/:user_id/sleep_records/clock_out`
-
-### Sleep Summaries
-
-*   **List Daily Sleep Summaries**
-    *   Method: `GET`
-    *   Path: `/api/v1/users/:user_id/daily_sleep_summaries`
-*   **Get a Specific Daily Sleep Summary**
-    *   Method: `GET`
-    *   Path: `/api/v1/users/:user_id/daily_sleep_summaries/:id`
+The API documentation is automatically generated from the RSpec integration tests.
 
 ## Testing
 
