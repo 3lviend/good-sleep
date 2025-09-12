@@ -1,0 +1,1896 @@
+---
+openapi: 3.0.1
+info:
+  title: Good Sleep API
+  version: v1
+paths:
+  "/api/v1/users/{user_id}/daily_sleep_summaries":
+    get:
+      summary: Retrieves all daily sleep summaries for a user
+      tags:
+      - Daily Sleep Summaries
+      parameters:
+      - name: user_id
+        in: path
+        example: 1
+        required: true
+        schema:
+          type: string
+      - name: page
+        in: query
+        required: false
+        example: 1
+        schema:
+          type: integer
+      - name: per_page
+        in: query
+        required: false
+        example: 10
+        schema:
+          type: integer
+      - name: q[id_eq]
+        in: query
+        required: false
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: daily sleep summaries found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  daily_sleep_summaries:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                          example: 1
+                        date:
+                          type: string
+                          format: date
+                          example: '2025-08-13'
+                        total_sleep_duration:
+                          type: integer
+                          example: 59640
+                        sleep_duration:
+                          type: object
+                          properties:
+                            hour:
+                              type: number
+                              example: 16.57
+                            minute:
+                              type: number
+                              example: 994
+                            second:
+                              type: integer
+                              example: 59640
+                        sleep_quality_score:
+                          type: integer
+                          example: 5
+                        user:
+                          type: object
+                          properties:
+                            id:
+                              type: integer
+                              example: 1
+                            name:
+                              type: string
+                              example: Damion Greenfelder
+                            created_at:
+                              type: string
+                              format: date-time
+                              example: '2025-09-12T07:38:29.071Z'
+                        created_at:
+                          type: string
+                          format: date-time
+                          example: '2025-09-12T17:21:57.408Z'
+                  pagination:
+                    type: object
+                    properties:
+                      current_page:
+                        type: integer
+                        example: 1
+                      next_page:
+                        type: integer
+                        nullable: true
+                        example:
+                      prev_page:
+                        type: integer
+                        nullable: true
+                        example:
+                      page_size:
+                        type: integer
+                        example: 1
+                      total_pages:
+                        type: integer
+                        example: 1
+                      total_count:
+                        type: integer
+                        example: 1
+  "/api/v1/users/{user_id}/daily_sleep_summaries/{id}":
+    get:
+      summary: Retrieves a daily sleep summary
+      tags:
+      - Daily Sleep Summaries
+      parameters:
+      - name: user_id
+        in: path
+        example: 1
+        required: true
+        schema:
+          type: string
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: daily sleep summary found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  daily_sleep_summary:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                        example: 1
+                      date:
+                        type: string
+                        format: date
+                        example: '2025-08-13'
+                      total_sleep_duration:
+                        type: integer
+                        example: 59640
+                      sleep_duration:
+                        type: object
+                        properties:
+                          hour:
+                            type: number
+                            example: 16.57
+                          minute:
+                            type: number
+                            example: 994
+                          second:
+                            type: integer
+                            example: 59640
+                      sleep_quality_score:
+                        type: integer
+                        example: 5
+                      user:
+                        type: object
+                        properties:
+                          id:
+                            type: integer
+                            example: 1
+                          name:
+                            type: string
+                            example: Damion Greenfelder
+                          created_at:
+                            type: string
+                            format: date-time
+                            example: '2025-09-12T07:38:29.071Z'
+                      created_at:
+                        type: string
+                        format: date-time
+                        example: '2025-09-12T17:21:57.408Z'
+        '404':
+          description: daily sleep summary not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Record not found
+  "/api/v1/users/{user_id}/follows":
+    get:
+      summary: Retrieves all followed users for a user
+      tags:
+      - Follows
+      parameters:
+      - name: user_id
+        in: path
+        example: 1
+        required: true
+        schema:
+          type: string
+      - name: page
+        in: query
+        required: false
+        example: 1
+        schema:
+          type: integer
+      - name: per_page
+        in: query
+        required: false
+        example: 10
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: followed users found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  following:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                          example: 2
+                        name:
+                          type: string
+                          example: Alease Leffler
+                        sleep_records:
+                          type: array
+                          items:
+                            type: object
+                            properties:
+                              id:
+                                type: integer
+                                example: 622
+                              sleep_time:
+                                type: string
+                                format: date-time
+                                example: '2025-08-21T18:09:00.000Z'
+                              awake_time:
+                                type: string
+                                format: date-time
+                                example: '2025-08-22T11:48:00.000Z'
+                              duration_seconds:
+                                type: integer
+                                example: 63540
+                              sleep_duration:
+                                type: object
+                                properties:
+                                  hour:
+                                    type: number
+                                    example: 17.65
+                                  minute:
+                                    type: integer
+                                    example: 1059
+                                  second:
+                                    type: integer
+                                    example: 63540
+                              created_at:
+                                type: string
+                                format: date-time
+                                example: '2025-09-12T07:38:36.181Z'
+                        created_at:
+                          type: string
+                          format: date-time
+                          example: '2025-09-12T07:38:32.983Z'
+                  pagination:
+                    type: object
+                    properties:
+                      current_page:
+                        type: integer
+                        example: 1
+                      next_page:
+                        type: integer
+                        nullable: true
+                        example:
+                      prev_page:
+                        type: integer
+                        nullable: true
+                        example:
+                      page_size:
+                        type: integer
+                        example: 1
+                      total_pages:
+                        type: integer
+                        example: 1
+                      total_count:
+                        type: integer
+                        example: 1
+  "/api/v1/users/{user_id}/follows/followers":
+    get:
+      summary: Retrieves all followers for a user
+      tags:
+      - Follows
+      parameters:
+      - name: user_id
+        in: path
+        example: 1
+        required: true
+        schema:
+          type: string
+      - name: page
+        in: query
+        required: false
+        example: 1
+        schema:
+          type: integer
+      - name: per_page
+        in: query
+        required: false
+        example: 10
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: followers found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  followers:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                          example: 1
+                        name:
+                          type: string
+                          example: Damion Greenfelder
+                        sleep_records:
+                          type: array
+                          items:
+                            type: object
+                            properties:
+                              id:
+                                type: integer
+                                example: 13
+                              sleep_time:
+                                type: string
+                                format: date-time
+                                example: '2024-11-07T18:08:00.000Z'
+                              awake_time:
+                                type: string
+                                format: date-time
+                                example: '2024-11-08T11:46:00.000Z'
+                              duration_seconds:
+                                type: integer
+                                example: 63480
+                              sleep_duration:
+                                type: object
+                                properties:
+                                  hour:
+                                    type: number
+                                    example: 17.63
+                                  minute:
+                                    type: integer
+                                    example: 1058
+                                  second:
+                                    type: integer
+                                    example: 63480
+                              created_at:
+                                type: string
+                                format: date-time
+                                example: '2025-09-12T07:38:29.354Z'
+                        created_at:
+                          type: string
+                          format: date-time
+                          example: '2025-09-12T07:38:29.071Z'
+                  pagination:
+                    type: object
+                    properties:
+                      current_page:
+                        type: integer
+                        example: 1
+                      next_page:
+                        type: integer
+                        nullable: true
+                        example:
+                      prev_page:
+                        type: integer
+                        nullable: true
+                        example:
+                      page_size:
+                        type: integer
+                        example: 1
+                      total_pages:
+                        type: integer
+                        example: 1
+                      total_count:
+                        type: integer
+                        example: 1
+  "/api/v1/users/{user_id}/follows/blocked":
+    get:
+      summary: Retrieves all blocked users for a user
+      tags:
+      - Follows
+      parameters:
+      - name: user_id
+        in: path
+        example: 1
+        required: true
+        schema:
+          type: string
+      - name: page
+        in: query
+        required: false
+        example: 1
+        schema:
+          type: integer
+      - name: per_page
+        in: query
+        required: false
+        example: 10
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: blocked users found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  blocked:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                          example: 1
+                        name:
+                          type: string
+                          example: Damion Greenfelder
+                        followable_summaries:
+                          type: object
+                          properties:
+                            following_count:
+                              type: integer
+                              example: 7
+                            followers_count:
+                              type: integer
+                              example: 0
+                            followers_blocked_count:
+                              type: integer
+                              example: 0
+                        last_30_days_sleep_summaries:
+                          type: object
+                          properties:
+                            total_sleep_duration:
+                              type: object
+                              properties:
+                                hour:
+                                  type: integer
+                                  example: 0
+                                minute:
+                                  type: integer
+                                  example: 0
+                                second:
+                                  type: integer
+                                  example: 0
+                            average_sleep_duration:
+                              type: object
+                              properties:
+                                hour:
+                                  type: number
+                                  nullable: true
+                                  example:
+                                minute:
+                                  type: integer
+                                  nullable: true
+                                  example:
+                                second:
+                                  type: integer
+                                  nullable: true
+                                  example:
+                            average_sleep_quality_score:
+                              type: number
+                              example: 0
+                        created_at:
+                          type: string
+                          format: date-time
+                          example: '2025-09-12T07:38:29.071Z'
+                  pagination:
+                    type: object
+                    properties:
+                      current_page:
+                        type: integer
+                        example: 1
+                      next_page:
+                        type: integer
+                        nullable: true
+                        example:
+                      prev_page:
+                        type: integer
+                        nullable: true
+                        example:
+                      page_size:
+                        type: integer
+                        example: 1
+                      total_pages:
+                        type: integer
+                        example: 1
+                      total_count:
+                        type: integer
+                        example: 1
+  "/api/v1/users/{user_id}/follows/request_follow":
+    post:
+      summary: Requests to follow a user
+      tags:
+      - Follows
+      parameters:
+      - name: user_id
+        in: path
+        example: 1
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: follow request created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  user:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                        example: 9
+                      name:
+                        type: string
+                        example: Kylie Rogahn
+                      followable_summaries:
+                        type: object
+                        properties:
+                          following_count:
+                            type: integer
+                            example: 0
+                          followers_count:
+                            type: integer
+                            example: 1
+                          followers_blocked_count:
+                            type: integer
+                            example: 0
+                      last_30_days_sleep_summaries:
+                        type: object
+                        properties:
+                          total_sleep_duration:
+                            type: object
+                            properties:
+                              hour:
+                                type: integer
+                                example: 0
+                              minute:
+                                type: integer
+                                example: 0
+                              second:
+                                type: integer
+                                example: 0
+                          average_sleep_duration:
+                            type: object
+                            properties:
+                              hour:
+                                type: number
+                                nullable: true
+                                example:
+                              minute:
+                                type: integer
+                                nullable: true
+                                example:
+                              second:
+                                type: integer
+                                nullable: true
+                                example:
+                          average_sleep_quality_score:
+                            type: number
+                            example: 0
+                      created_at:
+                        type: string
+                        format: date-time
+                        example: '2025-09-12T07:38:55.837Z'
+                  message:
+                    type: string
+                    example: Successfully followed Kylie Rogahn.
+        '422':
+          description: When user already follow or failed when follow user
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: Follower is already following this user
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                followed_user_id:
+                  type: integer
+              required:
+              - followed_user_id
+  "/api/v1/users/{user_id}/follows/block_follower":
+    put:
+      summary: Blocks a follower
+      tags:
+      - Follows
+      parameters:
+      - name: user_id
+        in: path
+        example: 1
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: follower blocked
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  user:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                        example: 1
+                      name:
+                        type: string
+                        example: Damion Greenfelder
+                      followable_summaries:
+                        type: object
+                        properties:
+                          following_count:
+                            type: integer
+                            example: 7
+                          followers_count:
+                            type: integer
+                            example: 0
+                          followers_blocked_count:
+                            type: integer
+                            example: 0
+                      last_30_days_sleep_summaries:
+                        type: object
+                        properties:
+                          total_sleep_duration:
+                            type: object
+                            properties:
+                              hour:
+                                type: integer
+                                example: 0
+                              minute:
+                                type: integer
+                                example: 0
+                              second:
+                                type: integer
+                                example: 0
+                          average_sleep_duration:
+                            type: object
+                            properties:
+                              hour:
+                                type: number
+                                nullable: true
+                                example:
+                              minute:
+                                type: integer
+                                nullable: true
+                                example:
+                              second:
+                                type: integer
+                                nullable: true
+                                example:
+                          average_sleep_quality_score:
+                            type: number
+                            example: 0
+                      created_at:
+                        type: string
+                        format: date-time
+                        example: '2025-09-12T07:38:29.071Z'
+                  message:
+                    type: string
+                    example: Successfully blocked Damion Greenfelder.
+        '404':
+          description: follower not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Record not found
+        '422':
+          description: follower not following the user
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: You are not followed by user Damion Greenfelder.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                follower_user_id:
+                  type: integer
+              required:
+              - follower_user_id
+  "/api/v1/users/{user_id}/follows/unblock_follower":
+    put:
+      summary: Unblocks a follower
+      tags:
+      - Follows
+      parameters:
+      - name: user_id
+        in: path
+        example: 1
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: follower unblocked
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  user:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                        example: 1
+                      name:
+                        type: string
+                        example: Damion Greenfelder
+                      followable_summaries:
+                        type: object
+                        properties:
+                          following_count:
+                            type: integer
+                            example: 8
+                          followers_count:
+                            type: integer
+                            example: 0
+                          followers_blocked_count:
+                            type: integer
+                            example: 0
+                      last_30_days_sleep_summaries:
+                        type: object
+                        properties:
+                          total_sleep_duration:
+                            type: object
+                            properties:
+                              hour:
+                                type: integer
+                                example: 0
+                              minute:
+                                type: integer
+                                example: 0
+                              second:
+                                type: integer
+                                example: 0
+                          average_sleep_duration:
+                            type: object
+                            properties:
+                              hour:
+                                type: number
+                                nullable: true
+                                example:
+                              minute:
+                                type: integer
+                                nullable: true
+                                example:
+                              second:
+                                type: integer
+                                nullable: true
+                                example:
+                          average_sleep_quality_score:
+                            type: number
+                            example: 0
+                      created_at:
+                        type: string
+                        format: date-time
+                        example: '2025-09-12T07:38:29.071Z'
+                  message:
+                    type: string
+                    example: Successfully unblocked Damion Greenfelder.
+        '404':
+          description: follower not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Record not found
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                follower_user_id:
+                  type: integer
+              required:
+              - follower_user_id
+  "/api/v1/users/{user_id}/follows/unfollow":
+    delete:
+      summary: Unfollows a user
+      tags:
+      - Follows
+      parameters:
+      - name: user_id
+        in: path
+        example: 1
+        required: true
+        schema:
+          type: string
+      - name: followed_user_id
+        in: query
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: user unfollowed
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  user:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                        example: 9
+                      name:
+                        type: string
+                        example: Kylie Rogahn
+                      followable_summaries:
+                        type: object
+                        properties:
+                          following_count:
+                            type: integer
+                            example: 0
+                          followers_count:
+                            type: integer
+                            example: 0
+                          followers_blocked_count:
+                            type: integer
+                            example: 0
+                      last_30_days_sleep_summaries:
+                        type: object
+                        properties:
+                          total_sleep_duration:
+                            type: object
+                            properties:
+                              hour:
+                                type: integer
+                                example: 0
+                              minute:
+                                type: integer
+                                example: 0
+                              second:
+                                type: integer
+                                example: 0
+                          average_sleep_duration:
+                            type: object
+                            properties:
+                              hour:
+                                type: number
+                                nullable: true
+                                example:
+                              minute:
+                                type: integer
+                                nullable: true
+                                example:
+                              second:
+                                type: integer
+                                nullable: true
+                                example:
+                          average_sleep_quality_score:
+                            type: number
+                            example: 0
+                      created_at:
+                        type: string
+                        format: date-time
+                        example: '2025-09-12T07:38:55.837Z'
+                  message:
+                    type: string
+                    example: Successfully unfollowed Kylie Rogahn.
+        '404':
+          description: follow not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Record not found
+  "/api/v1/users/{user_id}/sleep_records":
+    get:
+      summary: Retrieves all sleep records for a user
+      tags:
+      - Sleep Records
+      parameters:
+      - name: user_id
+        in: path
+        example: 1
+        required: true
+        schema:
+          type: string
+      - name: page
+        in: query
+        required: false
+        example: 1
+        schema:
+          type: integer
+      - name: per_page
+        in: query
+        required: false
+        example: 10
+        schema:
+          type: integer
+      - name: q[id_eq]
+        in: query
+        required: false
+        schema:
+          type: integer
+      - name: q[sleep_time_gteq]
+        in: query
+        format: date-time
+        required: false
+        description: Filter by sleep time greater than or equal to a given datetime.
+          (e.g., '2025-09-09 23:52:01')
+        schema:
+          type: string
+      - name: q[sleep_time_lteq]
+        in: query
+        format: date-time
+        required: false
+        description: Filter by sleep time less than or equal to a given datetime.
+          (e.g., '2025-09-10 09:21:00')
+        schema:
+          type: string
+      - name: q[sleep_time_between][]
+        in: query
+        format: date-time
+        required: false
+        description: Filter by sleep time between given datetime begin. (e.g., '2025-09-10
+          09:21:00')
+        schema:
+          type: string
+      - name: q[sleep_time_between][]
+        in: query
+        format: date-time
+        required: false
+        description: Filter by sleep time between given datetime end. (e.g., '2025-09-10
+          09:23:00')
+        schema:
+          type: string
+      - name: q[awake_time_gteq]
+        in: query
+        format: date-time
+        required: false
+        description: Filter by awake time greater than or equal to a given datetime.
+          (e.g., '2025-09-09 23:52:01')
+        schema:
+          type: string
+      - name: q[awake_time_lteq]
+        in: query
+        format: date-time
+        required: false
+        description: Filter by awake time less than or equal to a given datetime.
+          (e.g., '2025-09-10 09:21:00')
+        schema:
+          type: string
+      - name: q[awake_time_between][]
+        in: query
+        format: date-time
+        required: false
+        description: Filter by awake time betweeen given datetime begin. (e.g., '2025-09-10
+          09:21:00')
+        schema:
+          type: string
+      - name: q[awake_time_between][]
+        in: query
+        format: date-time
+        required: false
+        description: Filter by awake time betweeen given datetime end. (e.g., '2025-09-10
+          10:00:00')
+        schema:
+          type: string
+      - name: q[duration_seconds_gteq]
+        in: query
+        required: false
+        description: Filter by duration in seconds greater than or equal to a given
+          value.
+        schema:
+          type: integer
+      - name: q[duration_seconds_lteq]
+        in: query
+        required: false
+        description: Filter by duration in seconds less than or equal to a given value.
+        schema:
+          type: integer
+      - name: q[duration_seconds_between][]
+        in: query
+        required: false
+        description: Filter by duration in seconds between given value begin. (e.g.,
+          '3600' for 1 hour, '32400' for 9 hours)
+        schema:
+          type: integer
+      - name: q[duration_seconds_between][]
+        in: query
+        required: false
+        description: Filter by duration in seconds between given value end. (e.g.,
+          '3600' for 1 hour, '32400' for 9 hours)
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: sleep records found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  sleep_records:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                          example: 322
+                        sleep_time:
+                          type: string
+                          format: date-time
+                          example: '2025-09-12T08:47:59.153Z'
+                        awake_time:
+                          type: string
+                          format: date-time
+                          nullable: true
+                          example: '2025-09-12T16:47:59.153Z'
+                        duration_seconds:
+                          type: integer
+                          example: 28800
+                        sleep_duration:
+                          type: object
+                          properties:
+                            hour:
+                              type: hour
+                              nullable: true
+                              example: 8
+                            minute:
+                              type: hour
+                              nullable: true
+                              example: 0
+                            second:
+                              type: integer
+                              nullable: true
+                              example: 0
+                        user:
+                          type: object
+                          properties:
+                            id:
+                              type: integer
+                              example: 1
+                            name:
+                              type: string
+                              example: Damion Greenfelder
+                            last_30_days_sleep_summaries:
+                              type: object
+                              properties:
+                                total_sleep_duration:
+                                  type: object
+                                  properties:
+                                    hour:
+                                      type: hour
+                                    minute:
+                                      type: hour
+                                    second:
+                                      type: integer
+                                average_sleep_duration:
+                                  type: object
+                                  properties:
+                                    hour:
+                                      type: hour
+                                      nullable: true
+                                    minute:
+                                      type: hour
+                                      nullable: true
+                                    second:
+                                      type: integer
+                                      nullable: true
+                                average_sleep_quality_score:
+                                  type: number
+                                  example: 8
+                            created_at:
+                              type: string
+                              format: date-time
+                              example: '2025-09-12T07:38:29.071Z'
+                        created_at:
+                          type: string
+                          format: date-time
+                          example: '2025-09-12T07:38:32.967Z'
+                  pagination:
+                    type: object
+                    properties:
+                      current_page:
+                        type: integer
+                        example: 1
+                      next_page:
+                        type: integer
+                        nullable: true
+                        example:
+                      prev_page:
+                        type: integer
+                        nullable: true
+                        example:
+                      page_size:
+                        type: integer
+                        example: 1
+                      total_pages:
+                        type: integer
+                        example: 1
+                      total_count:
+                        type: integer
+                        example: 1
+  "/api/v1/users/{user_id}/sleep_records/following":
+    get:
+      summary: Retrieves all sleep records from followed users
+      tags:
+      - Sleep Records
+      parameters:
+      - name: user_id
+        in: path
+        example: 1
+        required: true
+        schema:
+          type: string
+      - name: page
+        in: query
+        required: false
+        example: 1
+        schema:
+          type: integer
+      - name: per_page
+        in: query
+        required: false
+        example: 10
+        schema:
+          type: integer
+      - name: q[id_eq]
+        in: query
+        required: false
+        schema:
+          type: integer
+      - name: q[sleep_time_gteq]
+        in: query
+        format: date-time
+        required: false
+        description: Filter by sleep time greater than or equal to a given datetime.
+          (e.g., '2025-09-09 23:52:01')
+        schema:
+          type: string
+      - name: q[sleep_time_lteq]
+        in: query
+        format: date-time
+        required: false
+        description: Filter by sleep time less than or equal to a given datetime.
+          (e.g., '2025-09-10 09:21:00')
+        schema:
+          type: string
+      - name: q[sleep_time_between][]
+        in: query
+        format: date-time
+        required: false
+        description: Filter by sleep time between given datetime begin. (e.g., '2025-09-10
+          09:21:00')
+        schema:
+          type: string
+      - name: q[sleep_time_between][]
+        in: query
+        format: date-time
+        required: false
+        description: Filter by sleep time between given datetime end. (e.g., '2025-09-10
+          09:23:00')
+        schema:
+          type: string
+      - name: q[awake_time_gteq]
+        in: query
+        format: date-time
+        required: false
+        description: Filter by awake time greater than or equal to a given datetime.
+          (e.g., '2025-09-09 23:52:01')
+        schema:
+          type: string
+      - name: q[awake_time_lteq]
+        in: query
+        format: date-time
+        required: false
+        description: Filter by awake time less than or equal to a given datetime.
+          (e.g., '2025-09-10 09:21:00')
+        schema:
+          type: string
+      - name: q[awake_time_between][]
+        in: query
+        format: date-time
+        required: false
+        description: Filter by awake time betweeen given datetime begin. (e.g., '2025-09-10
+          09:21:00')
+        schema:
+          type: string
+      - name: q[awake_time_between][]
+        in: query
+        format: date-time
+        required: false
+        description: Filter by awake time betweeen given datetime end. (e.g., '2025-09-10
+          10:00:00')
+        schema:
+          type: string
+      - name: q[duration_seconds_gteq]
+        in: query
+        required: false
+        description: Filter by duration in seconds greater than or equal to a given
+          value.
+        schema:
+          type: integer
+      - name: q[duration_seconds_lteq]
+        in: query
+        required: false
+        description: Filter by duration in seconds less than or equal to a given value.
+        schema:
+          type: integer
+      - name: q[duration_seconds_between][]
+        in: query
+        required: false
+        description: Filter by duration in seconds between given value begin. (e.g.,
+          '3600' for 1 hour, '32400' for 9 hours)
+        schema:
+          type: integer
+      - name: q[duration_seconds_between][]
+        in: query
+        required: false
+        description: Filter by duration in seconds between given value end. (e.g.,
+          '3600' for 1 hour, '32400' for 9 hours)
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: sleep records found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  sleep_records:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                          example: 322
+                        sleep_time:
+                          type: string
+                          format: date-time
+                          example: '2025-09-12T08:47:59.153Z'
+                        awake_time:
+                          type: string
+                          format: date-time
+                          nullable: true
+                          example: '2025-09-12T16:47:59.153Z'
+                        duration_seconds:
+                          type: integer
+                          example: 28800
+                        sleep_duration:
+                          type: object
+                          properties:
+                            hour:
+                              type: hour
+                              nullable: true
+                              example: 8
+                            minute:
+                              type: hour
+                              nullable: true
+                              example: 0
+                            second:
+                              type: integer
+                              nullable: true
+                              example: 0
+                        user:
+                          type: object
+                          properties:
+                            id:
+                              type: integer
+                              example: 1
+                            name:
+                              type: string
+                              example: Damion Greenfelder
+                            last_30_days_sleep_summaries:
+                              type: object
+                              properties:
+                                total_sleep_duration:
+                                  type: object
+                                  properties:
+                                    hour:
+                                      type: hour
+                                    minute:
+                                      type: hour
+                                    second:
+                                      type: integer
+                                average_sleep_duration:
+                                  type: object
+                                  properties:
+                                    hour:
+                                      type: hour
+                                      nullable: true
+                                    minute:
+                                      type: hour
+                                      nullable: true
+                                    second:
+                                      type: integer
+                                      nullable: true
+                                average_sleep_quality_score:
+                                  type: number
+                                  example: 8
+                            created_at:
+                              type: string
+                              format: date-time
+                              example: '2025-09-12T07:38:29.071Z'
+                        created_at:
+                          type: string
+                          format: date-time
+                          example: '2025-09-12T07:38:32.967Z'
+                  pagination:
+                    type: object
+                    properties:
+                      current_page:
+                        type: integer
+                        example: 1
+                      next_page:
+                        type: integer
+                        nullable: true
+                        example:
+                      prev_page:
+                        type: integer
+                        nullable: true
+                        example:
+                      page_size:
+                        type: integer
+                        example: 1
+                      total_pages:
+                        type: integer
+                        example: 1
+                      total_count:
+                        type: integer
+                        example: 1
+  "/api/v1/users/{user_id}/sleep_records/{id}":
+    get:
+      summary: Retrieves a sleep record
+      tags:
+      - Sleep Records
+      parameters:
+      - name: user_id
+        in: path
+        example: 1
+        required: true
+        schema:
+          type: string
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: sleep record found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  sleep_record:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                        example: 1
+                      sleep_time:
+                        type: string
+                        format: date-time
+                        example: '2024-10-26T23:52:00.000Z'
+                      awake_time:
+                        type: string
+                        format: date-time
+                        nullable: true
+                        example: '2024-10-27T10:41:00.000Z'
+                      duration_seconds:
+                        type: integer
+                        example: 38940
+                      sleep_duration:
+                        type: object
+                        properties:
+                          hour:
+                            type: hour
+                            example: 10.82
+                          minute:
+                            type: hour
+                            example: 649
+                          second:
+                            type: integer
+                            example: 38940
+                      user:
+                        type: object
+                        properties:
+                          id:
+                            type: integer
+                            example: 1
+                          name:
+                            type: string
+                            example: Damion Greenfelder
+                          last_30_days_sleep_summaries:
+                            type: object
+                            properties:
+                              total_sleep_duration:
+                                type: object
+                                properties:
+                                  hour:
+                                    type: hour
+                                    example: 0
+                                  minute:
+                                    type: hour
+                                    example: 0
+                                  second:
+                                    type: integer
+                                    example: 0
+                              average_sleep_duration:
+                                type: object
+                                properties:
+                                  hour:
+                                    type: hour
+                                    nullable: true
+                                    example:
+                                  minute:
+                                    type: hour
+                                    nullable: true
+                                    example:
+                                  second:
+                                    type: integer
+                                    nullable: true
+                                    example:
+                              average_sleep_quality_score:
+                                type: number
+                                example: 0
+                          created_at:
+                            type: string
+                            format: date-time
+                            example: '2025-09-12T07:38:29.071Z'
+                      created_at:
+                        type: string
+                        format: date-time
+                        example: '2025-09-12T07:38:29.110Z'
+        '404':
+          description: sleep record not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Record not found
+  "/api/v1/users/{user_id}/sleep_records/clock_in":
+    post:
+      summary: Clocks in a sleep record
+      tags:
+      - Sleep Records
+      parameters:
+      - name: user_id
+        in: path
+        example: 1
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Clock In - Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  sleep_record:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                        example: 1
+                      sleep_time:
+                        type: string
+                        format: date-time
+                        example: '2024-10-26T23:52:00.000Z'
+                      awake_time:
+                        type: string
+                        format: date-time
+                        nullable: true
+                        example: '2024-10-27T10:41:00.000Z'
+                      duration_seconds:
+                        type: integer
+                        example: 38940
+                      sleep_duration:
+                        type: object
+                        properties:
+                          hour:
+                            type: hour
+                            nullable: true
+                            example: 10.82
+                          minute:
+                            type: hour
+                            nullable: true
+                            example: 649
+                          second:
+                            type: integer
+                            nullable: true
+                            example: 38940
+                      user:
+                        type: object
+                        properties:
+                          id:
+                            type: integer
+                            example: 1
+                          name:
+                            type: string
+                            example: Damion Greenfelder
+                          last_30_days_sleep_summaries:
+                            type: object
+                            properties:
+                              total_sleep_duration:
+                                type: object
+                                properties:
+                                  hour:
+                                    type: hour
+                                    example: 0
+                                  minute:
+                                    type: hour
+                                    example: 0
+                                  second:
+                                    type: integer
+                                    example: 0
+                              average_sleep_duration:
+                                type: object
+                                properties:
+                                  hour:
+                                    type: hour
+                                    nullable: true
+                                    example:
+                                  minute:
+                                    type: hour
+                                    nullable: true
+                                    example:
+                                  second:
+                                    type: integer
+                                    nullable: true
+                                    example:
+                              average_sleep_quality_score:
+                                type: number
+                                example: 0
+                          created_at:
+                            type: string
+                            format: date-time
+                            example: '2025-09-12T07:38:29.071Z'
+                      created_at:
+                        type: string
+                        format: date-time
+                        example: '2025-09-12T07:38:29.110Z'
+  "/api/v1/users/{user_id}/sleep_records/clock_out":
+    put:
+      summary: Clocks out a sleep record
+      tags:
+      - Sleep Records
+      parameters:
+      - name: user_id
+        in: path
+        example: 1
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Clock In - Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  sleep_record:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                        example: 1
+                      sleep_time:
+                        type: string
+                        format: date-time
+                        example: '2024-10-26T23:52:00.000Z'
+                      awake_time:
+                        type: string
+                        format: date-time
+                        nullable: true
+                        example: '2024-10-27T10:41:00.000Z'
+                      duration_seconds:
+                        type: integer
+                        example: 38940
+                      sleep_duration:
+                        type: object
+                        properties:
+                          hour:
+                            type: hour
+                            example: 10.82
+                          minute:
+                            type: hour
+                            example: 649
+                          second:
+                            type: integer
+                            example: 38940
+                      user:
+                        type: object
+                        properties:
+                          id:
+                            type: integer
+                            example: 1
+                          name:
+                            type: string
+                            example: Damion Greenfelder
+                          last_30_days_sleep_summaries:
+                            type: object
+                            properties:
+                              total_sleep_duration:
+                                type: object
+                                properties:
+                                  hour:
+                                    type: hour
+                                    example: 0
+                                  minute:
+                                    type: hour
+                                    example: 0
+                                  second:
+                                    type: integer
+                                    example: 0
+                              average_sleep_duration:
+                                type: object
+                                properties:
+                                  hour:
+                                    type: hour
+                                    nullable: true
+                                    example:
+                                  minute:
+                                    type: hour
+                                    nullable: true
+                                    example:
+                                  second:
+                                    type: integer
+                                    nullable: true
+                                    example:
+                              average_sleep_quality_score:
+                                type: number
+                                example: 0
+                          created_at:
+                            type: string
+                            format: date-time
+                            example: '2025-09-12T07:38:29.071Z'
+                      created_at:
+                        type: string
+                        format: date-time
+                        example: '2025-09-12T07:38:29.110Z'
+        '400':
+          description: When no active clock in
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: No active sleep record found. Please clock in first.
+  "/api/v1/users":
+    get:
+      summary: Retrieves all users
+      tags:
+      - Users
+      responses:
+        '200':
+          description: List of users - Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  users:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                        name:
+                          type: string
+                          example: John Doe
+                        followable_summaries:
+                          type: object
+                          properties:
+                            following_count:
+                              type: integer
+                              example: 5
+                            followers_count:
+                              type: integer
+                              example: 10
+                            followers_blocked_count:
+                              type: integer
+                              example: 0
+                        last_30_days_sleep_summaries:
+                          type: object
+                          properties:
+                            total_sleep_duration:
+                              type: object
+                              properties:
+                                hour:
+                                  type: number
+                                  example: 10.17
+                                minute:
+                                  type: integer
+                                  example: 610
+                                second:
+                                  type: integer
+                                  example: 36600
+                            average_sleep_duration:
+                              type: object
+                              properties:
+                                hour:
+                                  type: number
+                                  example: 10.17
+                                  nullable: true
+                                minute:
+                                  type: integer
+                                  example: 610
+                                  nullable: true
+                                second:
+                                  type: integer
+                                  example: 36600
+                                  nullable: true
+                            average_sleep_quality_score:
+                              type: number
+                              example: 8
+                        created_at:
+                          type: string
+                          format: date-time
+                  pagination:
+                    type: object
+                    properties:
+                      current_page:
+                        type: integer
+                        example: 1
+                      next_page:
+                        type: integer
+                        nullable: true
+                        example:
+                      prev_page:
+                        type: integer
+                        nullable: true
+                        example:
+                      page_size:
+                        type: integer
+                        example: 1
+                      total_pages:
+                        type: integer
+                        example: 1
+                      total_count:
+                        type: integer
+                        example: 1
+  "/api/v1/users/{id}":
+    get:
+      summary: Retrieves a user
+      tags:
+      - Users
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: User found - Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  user:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                      name:
+                        type: string
+                        example: John Doe
+                      followable_summaries:
+                        type: object
+                        properties:
+                          following_count:
+                            type: integer
+                            example: 5
+                          followers_count:
+                            type: integer
+                            example: 10
+                          followers_blocked_count:
+                            type: integer
+                            example: 0
+                      last_30_days_sleep_summaries:
+                        type: object
+                        properties:
+                          total_sleep_duration:
+                            type: object
+                            properties:
+                              hour:
+                                type: number
+                                example: 10.17
+                              minute:
+                                type: integer
+                                example: 610
+                              second:
+                                type: integer
+                                example: 36600
+                          average_sleep_duration:
+                            type: object
+                            properties:
+                              hour:
+                                type: number
+                                nullable: true
+                                example: 10.17
+                              minute:
+                                type: integer
+                                nullable: true
+                                example: 610
+                              second:
+                                type: integer
+                                nullable: true
+                                example: 36600
+                          average_sleep_quality_score:
+                            type: number
+                            example: 8
+                      created_at:
+                        type: string
+                        format: date-time
+        '404':
+          description: User not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Record not found
+servers:
+- url: http://localhost:3000
+  description: Development server
