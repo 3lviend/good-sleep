@@ -23,8 +23,6 @@ gem "ransack", "~> 4.3.0"
 gem "kaminari"
 # Data serializer
 gem "active_model_serializers", "~> 0.10.2"
-# API Doc
-gem "rswag"
 
 # Redis for caching
 gem "redis-actionpack"
@@ -72,6 +70,11 @@ group :development, :test do
   # Data dummy generator
   gem "factory_bot_rails"
   gem "faker"
+
+  # API Doc
+  gem "rswag"
+  gem 'rswag-api'
+  gem 'rswag-ui'
 end
 
 group :development do

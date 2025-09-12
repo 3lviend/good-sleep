@@ -492,6 +492,8 @@ DEPENDENCIES
   redis-actionpack
   rspec-rails
   rswag
+  rswag-api
+  rswag-ui
   rubocop-rails-omakase
   selenium-webdriver
   sidekiq
