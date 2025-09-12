@@ -3,7 +3,9 @@ class UserSerializer < ActiveModel::Serializer
   attribute :followable_summaries, if: :include_followable_summaries?
 
   def include_followable_summaries?
-    instance_options[:include_followable_summaries] || true
+    return true if instance_options[:include_followable_summaries].nil?
+
+    instance_options[:include_followable_summaries]
   end
 
   def followable_summaries
