@@ -14,6 +14,7 @@ Rails.application.routes.draw do
       resources :users, only: %i[ index show ] do
         resources :sleep_records, only: %i[ index show ] do
           collection do
+            get   :following
             post  :clock_in
             match :clock_out, via: %i[ put patch ]
           end

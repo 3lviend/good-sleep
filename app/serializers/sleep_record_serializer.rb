@@ -1,5 +1,5 @@
 class SleepRecordSerializer < ActiveModel::Serializer
-  attributes :id, :sleep_time, :awake_time
+  attributes :id, :sleep_time, :awake_time, :duration_seconds
   attributes :sleep_duration
   attributes :user
   attributes :created_at

@@ -106,4 +106,32 @@ RSpec.describe "Api::V1::SleepRecords", type: :request do
       end
     end
   end
+
+  describe "GET /api/v1/users/:user_id/sleep_records/following" do
+    let(:user) { create(:user) }
+    let(:followed_user1) { create(:user) }
+    let(:followed_user2) { create(:user) }
+
+    before do
+      create(:follow, follower: user, followed: followed_user1)
+      create(:follow, follower: user, followed: followed_user2)
+
+      create(:sleep_record, user: followed_user1, duration_seconds: 3600)
+      create(:sleep_record, user: followed_user2, duration_seconds: 7200)
+      create(:sleep_record, user: user, duration_seconds: 1800)
+    end
+
+    it "returns sleep records from followed users, ordered by duration" do
+      get "/api/v1/users/#{user.id}/sleep_records/following"
+
+      expect(response).to have_http_status(:success)
+
+      json_response = JSON.parse(response.body)
+      sleep_records = json_response['sleep_records']
+
+      expect(sleep_records.size).to eq(2)
+      expect(sleep_records.first['duration_seconds']).to eq(7200)
+      expect(sleep_records.second['duration_seconds']).to eq(3600)
+    end
+  end
 end

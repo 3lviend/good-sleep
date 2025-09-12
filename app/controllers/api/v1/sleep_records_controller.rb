@@ -37,6 +37,25 @@ module Api
         }
       end
 
+      # GET  /api/v1/users/:user_id/sleep_records/following
+      def following
+        @following_users_ids = @user.following.ids
+        @q                   = SleepRecord.includes(:user).where(user_id: @following_users_ids).ransack(ransack_params)
+        @sleep_records       = @q.result.longest.page(params[:page]).per(params[:per_page])
+        cache_options        = {
+          collection: @sleep_records,
+          cached: false
+        }
+
+        render json: {
+          sleep_records: ActiveModel::Serializer::CollectionSerializer.new(
+            @sleep_records,
+            serializer: SleepRecordSerializer
+          ),
+          pagination: pagination_meta(**cache_options)
+        }
+      end
+
       # GET  /api/v1/users/:user_id/sleep_records/:id
       def show
         @sleep_record = @user.fetch_cache("#{@user.default_cache_key}::SleepRecord::#{params[:id]}") do
