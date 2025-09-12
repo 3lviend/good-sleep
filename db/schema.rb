@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_09_09_090837) do
+ActiveRecord::Schema[8.0].define(version: 2025_09_12_021505) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -33,7 +33,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_09_09_090837) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["blocked"], name: "index_follows_on_blocked"
-    t.index ["followed_id", "follower_id"], name: "index_follows_on_followed_id_and_follower_id"
+    t.index ["followed_id", "follower_id"], name: "index_follows_on_followed_id_and_follower_id", unique: true
     t.index ["followed_id"], name: "index_follows_on_followed_id"
     t.index ["follower_id"], name: "index_follows_on_follower_id"
   end
@@ -47,8 +47,12 @@ ActiveRecord::Schema[8.0].define(version: 2025_09_09_090837) do
     t.datetime "updated_at", null: false
     t.index ["awake_time"], name: "index_sleep_records_on_awake_time"
     t.index ["duration_seconds"], name: "index_sleep_records_on_duration_seconds"
+    t.index ["sleep_time"], name: "index_sleep_records_for_sleeping", where: "(awake_time IS NULL)"
     t.index ["sleep_time"], name: "index_sleep_records_on_sleep_time"
+    t.index ["user_id", "awake_time"], name: "index_sleep_records_on_user_id_and_awake_time"
     t.index ["user_id", "created_at"], name: "index_sleep_records_on_user_id_and_created_at"
+    t.index ["user_id", "duration_seconds"], name: "index_sleep_records_on_user_id_and_duration_seconds"
+    t.index ["user_id", "sleep_time"], name: "index_sleep_records_on_user_id_and_sleep_time"
     t.index ["user_id"], name: "index_sleep_records_on_user_id"
   end
 
@@ -60,5 +64,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_09_09_090837) do
   end
 
   add_foreign_key "daily_sleep_summaries", "users"
+  add_foreign_key "follows", "users", column: "followed_id"
+  add_foreign_key "follows", "users", column: "follower_id"
   add_foreign_key "sleep_records", "users"
 end
