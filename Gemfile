@@ -53,6 +53,8 @@ gem "thruster", require: false
 
 # gem "power_of_friendship", github: "LelandCer/power_of_friendship", branch: 'master'
 
+gem 'query_track', '~> 0.0.14'
+
 group :development, :test do
   # Models schema comment
   gem "annotaterb", require: false
