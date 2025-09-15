@@ -20,6 +20,6 @@ module Searchable
       []
     end
 
-    params.require(:q).permit(permitted_params).compact_blank
+    params.require(:q).permit(*permitted_params).compact_blank.presence || {} # Ensure always returns hash
   end
 end

@@ -1,3 +1,4 @@
+require 'rails_helper'
 require 'swagger_helper'
 
 describe 'Users API', type: :request do

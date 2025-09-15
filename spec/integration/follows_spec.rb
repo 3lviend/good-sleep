@@ -1,3 +1,4 @@
+require 'rails_helper'
 require 'swagger_helper'
 
 describe 'Follows API', type: :request do

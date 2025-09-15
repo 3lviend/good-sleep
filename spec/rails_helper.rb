@@ -41,10 +41,11 @@ RSpec.configure do |config|
   config.fixture_paths = [
     Rails.root.join('spec/fixtures')
   ]
-
+  
   # If you're not using ActiveRecord, or you'd prefer not to run each of your
   # examples within a transaction, remove the following line or assign false
   # instead of true.
+  config.fixture_paths = [ Rails.root.join('spec/fixtures') ]
   config.use_transactional_fixtures = true
 
   # You can uncomment this line to turn off ActiveRecord support entirely.
@@ -65,10 +66,28 @@ RSpec.configure do |config|
   # behaviour is considered legacy and will be removed in a future version.
   #
   # To enable this behaviour uncomment the line below.
-  # config.infer_spec_type_from_file_location!
+  config.infer_spec_type_from_file_location!
 
   # Filter lines from Rails gems in backtraces.
   config.filter_rails_from_backtrace!
   # arbitrary gems may also be filtered via:
   # config.filter_gems_from_backtrace("gem name")
+
+  # Database Cleaner setup default to transaction
+  config.before(:suite) do
+    DatabaseCleaner.strategy = :transaction
+    DatabaseCleaner.clean_with(:truncation)
+  end
+
+  # Custom tag to change cleaning_strategy
+  config.around(:each) do |example|
+    default_strategy = :transaction
+    # use it with `it "Should clean with truncation", cleaning_strategy: :truncation`
+    DatabaseCleaner.strategy = example.metadata.fetch(:cleaning_strategy, default_strategy)
+    DatabaseCleaner.cleaning do
+      example.run
+    end
+  end
 end
+
+Dir[Rails.root.join("spec/support/**/*.rb")].sort.each { |f| require f }

@@ -84,3 +84,11 @@ This project uses RSpec for testing. To run the test suite, use the following co
     ```bash
     bundle exec rspec spec/path/to/your_spec_directory/
     ```
+
+### Available Tests
+
+This project has the following types of tests:
+
+*   **Model Tests:** These tests cover the application's models and their validations, associations, and methods. You can find them in the `spec/models` directory.
+*   **Request Tests:** These tests cover the application's API endpoints and their responses. You can find them in the `spec/requests` directory.
+*   **Integration Tests:** These tests cover the application's API endpoints using RSwag for documentation generation. You can find them in the `spec/integration` directory.

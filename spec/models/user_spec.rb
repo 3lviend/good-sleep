@@ -114,7 +114,7 @@ RSpec.describe User, type: :model do
   end
 
   it "ransackable_attributes returns correct attributes" do
-    expected_attributes = %i[id name]
+    expected_attributes = %w[id name]
     expect(User.ransackable_attributes).to eq(expected_attributes)
   end
 end

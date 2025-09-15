@@ -8,3 +8,7 @@ default: &default
 development:
   <<: *default
   database: tripla_good_sleep_dev
+
+test:
+  <<: *default
+  database: tripla_good_sleep_test

@@ -1714,6 +1714,19 @@ paths:
                     example: No active sleep record found. Please clock in first.
   "/api/v1/users":
     get:
+      parameters:
+      - name: id_eq
+        in: path
+        example: 1
+        required: false
+        schema:
+          type: string
+      - name: name_cont
+        in: path
+        example: John
+        required: false
+        schema:
+          type: string
       summary: Retrieves all users
       tags:
       - Users
