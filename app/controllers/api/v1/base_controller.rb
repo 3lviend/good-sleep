@@ -1,8 +1,9 @@
 module Api
   module V1
     class BaseController < ApplicationController
-      include Searchable
       include ErrorsHandler
+      include Searchable
+      include UserFindable
 
       def pagination_meta(collection: [], cached: false, cache_key: "")
         return build_pagination_meta(collection) unless cached && cache_key.present?

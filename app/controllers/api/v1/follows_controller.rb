@@ -9,7 +9,7 @@
 module Api
   module V1
     class FollowsController < BaseController
-      before_action :find_user
+      before_action :set_user
 
       # GET /api/v1/users/:user_id/follows
       def index
@@ -62,9 +62,10 @@ module Api
         }
       end
 
-      # POST /api/v1/users/:user_id/follows/follow/:id
+      # POST /api/v1/users/:user_id/follows/request_follow
       def request_follow
-        @follow = @user.following_relationship.build(followed_id: params[:followed_user_id])
+        followed_user_id = params[:followed_user_id]
+        @follow          = @user.following_relationship.build(followed_id: followed_user_id)
         if @follow.save
           @other_user = @follow.followed
           clear_users_caches([ @user, @other_user ], %w[Following Follower])
@@ -77,11 +78,12 @@ module Api
         end
       end
 
-      # DELETE /api/v1/users/:user_id/follows/unfollow/:id
+      # DELETE /api/v1/users/:user_id/follows/unfollow
       def unfollow
-        @follow_data = retrieve_following_data(params[:followed_user_id])
-        @other_user  = @follow_data[:user]
-        @follow      = @follow_data[:follow]
+        followed_user_id = params[:followed_user_id]
+        @follow_data     = retrieve_following_data(followed_user_id)
+        @other_user      = @follow_data[:user]
+        @follow          = @follow_data[:follow]
         if @follow.blank? && !@other_user.following?(@user)
           render json: { error: "You are not following #{@follow_data[:user].name} or got blocked." }, status: 422 and return
         end
@@ -97,16 +99,17 @@ module Api
         end
       end
 
-      # PUT|PATCH /api/v1/users/:user_id/follows/block_follower/:id
+      # PUT|PATCH /api/v1/users/:user_id/follows/block_follower
       def block_follower
-        @follow_data = retrieve_follower_data(params[:follower_user_id])
-        @other_user  = @follow_data[:user]
-        @follow      = @follow_data[:follow]
+        follower_user_id = params[:follower_user_id]
+        @follow_data     = retrieve_follower_data(follower_user_id)
+        @other_user      = @follow_data[:user]
+        @follow          = @follow_data[:follow]
         if @follow.blank? && !@other_user.following?(@user)
           render json: { error: "You are followed by user #{@follow_data[:user].name}." }, status: 422 and return
         end
 
-        if @follow.update(blocked: true)
+        if @follow.block!
           clear_users_caches([ @user, @other_user ], %w[Following Follower Blocked])
           render json: {
             user: UserSerializer.new(@other_user),
@@ -117,16 +120,17 @@ module Api
         end
       end
 
-      # PUT|PATCH /api/v1/users/:user_id/follows/block_follower/:id
+      # PUT|PATCH /api/v1/users/:user_id/follows/unblock_follower
       def unblock_follower
-        @follow_data = retrieve_follower_data(params[:follower_user_id])
-        @other_user  = @follow_data[:user]
-        @follow      = @follow_data[:follow]
+        follower_user_id = params[:follower_user_id]
+        @follow_data     = retrieve_follower_data(follower_user_id)
+        @other_user      = @follow_data[:user]
+        @follow          = @follow_data[:follow]
         if @follow.blank? && !@other_user.following?(@user)
           render json: { error: "You are followed by user #{@follow_data[:user].name}." }, status: 422 and return
         end
 
-        if @follow.update(blocked: false)
+        if @follow.unblock!
           clear_users_caches([ @user, @other_user ], %w[Following Follower Blocked])
 
           render json: {
@@ -140,25 +144,17 @@ module Api
 
       private
 
-      def find_user
-        @user = Rails.cache.fetch("User::#{params[:user_id]}", expires_in: 10.minutes) do
-          User.find(params[:user_id])
-        end
+      def set_user
+        @user = find_user # Use concern method
       end
 
       def retrieve_following_data(user_id)
-        other_user = Rails.cache.fetch("User::#{user_id}", expires_in: 10.minutes) do
-          User.find(user_id)
-        end
-
+        other_user = find_user(user_id) # Use concern method
         { user: other_user, follow: @user.following_relationship.find_by(followed_id: user_id) }
       end
 
       def retrieve_follower_data(user_id)
-        other_user = Rails.cache.fetch("User::#{user_id}", expires_in: 10.minutes) do
-          User.find(user_id)
-        end
-
+        other_user = find_user(user_id) # Use concern method
         { user: other_user, follow: @user.all_follower_relationship.find_by(follower_id: user_id) }
       end
 

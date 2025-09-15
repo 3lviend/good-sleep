@@ -32,15 +32,17 @@ class User < ApplicationRecord
   end
 
   def followable_summaries
-    {
-      following_count: following.size,
-      followers_count: followers.size,
-      followers_blocked_count: blocked.size
-    }
+    fetch_cache("#{default_cache_key}::followable_summaries") do
+      {
+        following_count: following.size,
+        followers_count: followers.size,
+        followers_blocked_count: blocked.size
+      }
+    end
   end
 
   def self.ransackable_attributes(_auth_object = nil)
-    %i[id name]
+    %w[id name]
   end
 end
 

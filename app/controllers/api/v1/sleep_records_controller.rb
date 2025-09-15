@@ -8,7 +8,7 @@
 module Api
   module V1
     class SleepRecordsController < BaseController
-      before_action :find_user
+      before_action :set_user
 
       self.permitted_ransack_params = [
         :id_eq,
@@ -78,7 +78,7 @@ module Api
       def clock_out
         @sleep_record = @user.current_sleep_record
         unless @sleep_record
-          render json: { error: "No active sleep record found. Please clock in first." }, status: 400 and return
+          render json: { error: "No active sleep record found. Please clock in first." }, status: :bad_request and return
         end
 
         @sleep_record.awake_time = Time.current
@@ -90,10 +90,8 @@ module Api
 
       private
 
-      def find_user
-        @user = Rails.cache.fetch("User::#{params[:user_id]}", expires_in: 10.minutes) do
-          User.find(params[:user_id])
-        end
+      def set_user
+        @user = find_user # Use concern method
       end
     end
   end

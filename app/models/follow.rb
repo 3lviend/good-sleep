@@ -16,6 +16,14 @@ class Follow < ActiveRecord::Base
 
   # == Instance Methods
 
+  def block!
+    update!(blocked: true) unless blocked?
+  end
+
+  def unblock!
+    update!(blocked: false) if blocked?
+  end
+
   private
 
   def cannot_follow_self

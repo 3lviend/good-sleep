@@ -1,7 +1,9 @@
 module Api
   module V1
     class UsersController < BaseController
-      before_action :find_user, only: %i[ show ]
+      before_action :set_user, only: %i[ show ]
+
+      self.permitted_ransack_params = %i[ id_eq name_cont ]
 
       # GET /api/v1/users
       def index
@@ -25,10 +27,8 @@ module Api
 
       private
 
-      def find_user
-        @user = Rails.cache.fetch("User::#{params[:id]}", expires_in: 10.minutes) do
-          User.find(params[:id])
-        end
+      def set_user
+        @user = find_user(params[:id]) # Use concern method
       end
     end
   end

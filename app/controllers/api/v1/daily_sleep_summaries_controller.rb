@@ -8,7 +8,7 @@
 module Api
   module V1
     class DailySleepSummariesController < BaseController
-      before_action :find_user
+      before_action :set_user
 
       # GET /api/v1/users/:user_id/daily_sleep_summaries
       def index
@@ -35,10 +35,8 @@ module Api
 
       private
 
-      def find_user
-        @user = Rails.cache.fetch("User::#{params[:user_id]}", expires_in: 10.minutes) do
-          User.find(params[:user_id])
-        end
+      def set_user
+        @user = find_user # Use concern method
       end
     end
   end

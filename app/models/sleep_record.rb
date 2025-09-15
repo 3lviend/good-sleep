@@ -1,4 +1,7 @@
 class SleepRecord < ApplicationRecord
+  # == Modules
+  include DurationConverter
+
   # == Associations
   belongs_to :user
 
@@ -40,16 +43,7 @@ class SleepRecord < ApplicationRecord
   def sleep_duration(duration_type = :second)
     return nil if sleeping?
 
-    case duration_type
-    when :hour
-      # Convert seconds to hours and round to 2 decimal places
-      (duration_seconds / 3600.0).round(2)
-    when :minute
-      # Convert seconds to minutes and round to 2 decimal places
-      (duration_seconds / 60.0).round(2)
-    else
-      duration_seconds
-    end
+    convert_duration(duration_seconds, duration_type)
   end
 
   def wakeup!

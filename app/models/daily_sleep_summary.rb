@@ -1,4 +1,7 @@
 class DailySleepSummary < ApplicationRecord
+  # == Modules
+  include DurationConverter
+
   # == Associations
   belongs_to :user
 
@@ -7,7 +10,7 @@ class DailySleepSummary < ApplicationRecord
   validates :total_sleep_duration, numericality: { greater_than_or_equal_to: 0 }
 
   # == Callbacks
-  before_save :set_sleep_quality_score
+  before_validation :set_sleep_quality_score
 
   # == Scopes
   scope :last_month, -> { where(date: 1.month.ago.to_datetime.beginning_of_day..Time.current.end_of_day) }
@@ -15,16 +18,7 @@ class DailySleepSummary < ApplicationRecord
   # == Instance Methods
 
   def sleep_duration(duration_type = :second)
-    case duration_type
-    when :hour
-      # Convert seconds to hours and round to 2 decimal places
-      (total_sleep_duration / 3600.0).round(2)
-    when :minute
-      # Convert seconds to minutes and round to 2 decimal places
-      (total_sleep_duration / 60.0).round(2)
-    else
-      total_sleep_duration
-    end
+    convert_duration(total_sleep_duration, duration_type)
   end
 
   private
