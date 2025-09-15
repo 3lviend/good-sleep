@@ -10,6 +10,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
+# NOTE: The following indexes have been added to the sleep_records table to address
+# potential performance issues with full-table scans:
+#   - index_sleep_records_on_awake_time
+#   - index_sleep_records_on_duration_seconds
+#   - index_sleep_records_on_sleep_time
+#   - index_sleep_records_on_user_id_and_awake_time
+#   - index_sleep_records_on_user_id_and_sleep_time
+
 ActiveRecord::Schema[8.0].define(version: 2025_09_12_021505) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"

@@ -49,9 +49,10 @@ gem "thruster", require: false
 # Use Active Storage variants [https://guides.rubyonrails.org/active_storage_overview.html#transforming-images]
 # gem "image_processing", "~> 1.2"
 
-# gem "power_of_friendship", github: "LelandCer/power_of_friendship", branch: 'master'
+# Query performance analysis
+gem "query_track"
 
-gem "query_track", "~> 0.0.14"
+gem "rack-attack"
 
 group :development, :test do
   # Models schema comment
@@ -78,8 +79,8 @@ group :development, :test do
 end
 
 group :development do
-  gem "foreman", require: false
   gem "bullet", require: false # detect N+1 queries
+  gem "foreman", require: false
   # Use console on exceptions pages [https://github.com/rails/web-console]
   gem "web-console"
 end
