@@ -8,7 +8,7 @@ module Api
       # GET /api/v1/users
       def index
         @q            = User.ransack(ransack_params)
-        @users        = @q.result.includes(:following, :followers, :blocked, :daily_sleep_summaries).page(params[:page]).per(params[:per_page])
+        @users        = @q.result.eager_load(:following, :followers, :blocked, :daily_sleep_summaries).page(params[:page]).per(params[:per_page])
         cache_options = { collection: @users, cached: ransack_params.blank?, cache_key: "Index" }
 
         render json: {

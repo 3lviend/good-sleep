@@ -40,7 +40,7 @@ module Api
       # GET  /api/v1/users/:user_id/sleep_records/following
       def following
         @following_users_ids = @user.following.ids
-        @q                   = SleepRecord.includes(:user).where(user_id: @following_users_ids).ransack(ransack_params)
+        @q                   = SleepRecord.eager_load(:user).where(user_id: @following_users_ids).ransack(ransack_params)
         @sleep_records       = @q.result.longest.page(params[:page]).per(params[:per_page])
         cache_options        = {
           collection: @sleep_records,

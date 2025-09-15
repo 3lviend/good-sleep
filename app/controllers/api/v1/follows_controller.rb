@@ -13,7 +13,7 @@ module Api
 
       # GET /api/v1/users/:user_id/follows
       def index
-        @followed_users = @user.following.includes(:sleep_records).page(params[:page]).per(params[:per_page])
+        @followed_users = @user.following.eager_load(:sleep_records).page(params[:page]).per(params[:per_page])
         cache_options = {
           collection: @followed_users, cached: true,
           cache_key: "#{@user.default_cache_key}::Following"
@@ -30,7 +30,7 @@ module Api
 
       # GET /api/v1/users/:user_id/follows/followers
       def followers
-        @followed_users = @user.followers.includes(:sleep_records).page(params[:page]).per(params[:per_page])
+        @followed_users = @user.followers.eager_load(:sleep_records).page(params[:page]).per(params[:per_page])
         cache_options = {
           collection: @followed_users, cached: true,
           cache_key: "#{@user.default_cache_key}::Followers"
