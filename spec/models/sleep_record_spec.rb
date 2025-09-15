@@ -93,7 +93,7 @@ RSpec.describe SleepRecord, type: :model do
     expect(SleepRecord.ransackable_attributes).to eq(expected_attributes)
 
     tomorrow = 1.day.from_now.beginning_of_day
-    sleep1, sleep2, sleep3 = [nil, nil, nil]
+    sleep1, sleep2, sleep3 = [ nil, nil, nil ]
 
     travel_to tomorrow do
       sleep1 = create(:sleep_record, :sleeping, sleep_time: 4.hours.ago)
@@ -101,8 +101,8 @@ RSpec.describe SleepRecord, type: :model do
       sleep3 = create(:sleep_record, :sleeping, sleep_time: 3.hours.ago)
     end
 
-    expect(SleepRecord.ransack({sleep_time_gteq: tomorrow - 5.hours}).result.count).to eq(2)
-    expect(SleepRecord.ransack({sleep_time_lteq: tomorrow - 5.hours}).result.count).to eq(1)
+    expect(SleepRecord.ransack({ sleep_time_gteq: tomorrow - 5.hours }).result.count).to eq(2)
+    expect(SleepRecord.ransack({ sleep_time_lteq: tomorrow - 5.hours }).result.count).to eq(1)
 
     travel_to (tomorrow + 4.hours) do
       sleep1.wakeup!
@@ -114,11 +114,11 @@ RSpec.describe SleepRecord, type: :model do
       sleep3.wakeup!
     end
 
-    expect(SleepRecord.ransack({awake_time_gteq: tomorrow + 2.hours}).result.count).to eq(2)
-    expect(SleepRecord.ransack({awake_time_lteq: tomorrow + 2.hours}).result.count).to eq(1)
+    expect(SleepRecord.ransack({ awake_time_gteq: tomorrow + 2.hours }).result.count).to eq(2)
+    expect(SleepRecord.ransack({ awake_time_lteq: tomorrow + 2.hours }).result.count).to eq(1)
 
-    expect(SleepRecord.ransack({duration_seconds_gteq: 8.hours.to_i}).result.count).to eq(2)
-    expect(SleepRecord.ransack({duration_seconds_lteq: 7.hours.to_i}).result.count).to eq(1)
+    expect(SleepRecord.ransack({ duration_seconds_gteq: 8.hours.to_i }).result.count).to eq(2)
+    expect(SleepRecord.ransack({ duration_seconds_lteq: 7.hours.to_i }).result.count).to eq(1)
   end
 
   it "ransackable_scopes" do
@@ -126,7 +126,7 @@ RSpec.describe SleepRecord, type: :model do
     expect(SleepRecord.ransackable_scopes).to eq(expected_scopes)
 
     tomorrow = 1.day.from_now.beginning_of_day
-    sleep1, sleep2, sleep3 = [nil, nil, nil]
+    sleep1, sleep2, sleep3 = [ nil, nil, nil ]
 
     travel_to tomorrow do
       sleep1 = create(:sleep_record, :sleeping, sleep_time: 4.hours.ago)
@@ -144,9 +144,9 @@ RSpec.describe SleepRecord, type: :model do
       sleep3.wakeup!
     end
 
-    expect(SleepRecord.ransack({sleep_time_between: [tomorrow - 3.hours, tomorrow - 2.hours]}).result.count).to eq(1)
-    expect(SleepRecord.ransack({awake_time_between: [tomorrow + 1.hours, tomorrow + 2.hours]}).result.count).to eq(1)
-    expect(SleepRecord.ransack({duration_seconds_between: [8.hours, 9.hours]}).result.count).to eq(2)
+    expect(SleepRecord.ransack({ sleep_time_between: [ tomorrow - 3.hours, tomorrow - 2.hours ] }).result.count).to eq(1)
+    expect(SleepRecord.ransack({ awake_time_between: [ tomorrow + 1.hours, tomorrow + 2.hours ] }).result.count).to eq(1)
+    expect(SleepRecord.ransack({ duration_seconds_between: [ 8.hours, 9.hours ] }).result.count).to eq(2)
   end
 end
 

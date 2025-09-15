@@ -51,7 +51,7 @@ gem "thruster", require: false
 
 # gem "power_of_friendship", github: "LelandCer/power_of_friendship", branch: 'master'
 
-gem 'query_track', '~> 0.0.14'
+gem "query_track", "~> 0.0.14"
 
 group :development, :test do
   # Models schema comment
@@ -73,8 +73,8 @@ group :development, :test do
 
   # API Doc
   gem "rswag"
-  gem 'rswag-api'
-  gem 'rswag-ui'
+  gem "rswag-api"
+  gem "rswag-ui"
 end
 
 group :development do
