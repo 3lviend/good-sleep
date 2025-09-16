@@ -11,4 +11,4 @@ development:
 
 test:
   <<: *default
-  url: <%= ENV.fetch("DATABASE_URL") { "postgres://postgres:postgres@localhost:5432/tripla_good_sleep_test" } %>
+  url: <%= ENV.fetch("DATABASE_URL") { "postgres://rails:password@localhost:5432/tripla_good_sleep_test" } %>
