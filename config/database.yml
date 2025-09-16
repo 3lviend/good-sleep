@@ -2,13 +2,13 @@ default: &default
   adapter: postgresql
   encoding: unicode
   pool: <%= ENV.fetch("RAILS_MAX_DB_THREADS") { 5 } %>
-  username: postgres
-  password: postgres
 
 development:
   <<: *default
   database: tripla_good_sleep_dev
+  username: postgres
+  password: postgres
 
 test:
   <<: *default
-  database: tripla_good_sleep_test
+  url: <%= ENV.fetch("DATABASE_URL") { "postgres://postgres:postgres@localhost:5432/tripla_good_sleep_test" } %>
