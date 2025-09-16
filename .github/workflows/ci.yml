@@ -69,6 +69,9 @@ jobs:
         ports:
           - 6379:6379
         options: --health-cmd "redis-cli ping" --health-interval 10s --health-timeout 5s --health-retries 5
+    env:
+      RAILS_ENV: test
+      DATABASE_URL: "postgres://rails:password@localhost:5432/tripla_good_sleep_test"
     steps:
       - name: Install packages
         run: sudo apt-get update && sudo apt-get install --no-install-recommends -y build-essential git libyaml-dev pkg-config google-chrome-stable
@@ -85,9 +88,6 @@ jobs:
       - name: Set up database schema
         run: bin/rails db:schema:load
       - name: Run tests
-        env:
-          RAILS_ENV: test
-          DATABASE_URL: "postgres://rails:password@localhost:5432/tripla_good_sleep_test"
         run: bin/rake
 
       - name: Keep screenshots from failed system tests
